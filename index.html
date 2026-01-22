@@ -44,14 +44,20 @@
         }
 
         /* Gallery and Modal */
-        .gallery-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-top: 30px; }
-        .gallery-item { width: 100%; height: 200px; object-fit: cover; border-radius: 15px; cursor: pointer; transition: 0.3s; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
+        .gallery-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin-top: 30px; }
+        .gallery-item { width: 100%; height: 250px; object-fit: cover; border-radius: 15px; cursor: pointer; transition: 0.3s; box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
         .gallery-item:hover { transform: scale(1.05); filter: brightness(1.1); }
         
         .modal { display: none; position: fixed; z-index: 2000; padding-top: 50px; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.9); }
         .modal-content { margin: auto; display: block; width: 90%; max-width: 1000px; border-radius: 10px; animation: zoom 0.3s; }
         .close { position: absolute; top: 20px; right: 35px; color: #fff; font-size: 40px; font-weight: bold; cursor: pointer; }
         @keyframes zoom { from {transform:scale(0)} to {transform:scale(1)} }
+
+        /* Review Styles */
+        .reviews-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; margin-top: 30px; }
+        .review-card { background: rgba(255, 255, 255, 0.4); padding: 25px; border-radius: 15px; text-align: left; border: 1px solid rgba(255, 255, 255, 0.2); }
+        .stars { color: #f1c40f; margin-bottom: 10px; }
+        .guest-name { font-weight: bold; display: block; margin-top: 15px; color: var(--forest); }
 
         /* Tables and Policy Grids */
         .pricing-table { width: 100%; border-collapse: collapse; overflow: hidden; border-radius: 15px; margin-top: 20px; }
@@ -61,6 +67,7 @@
         .policy-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; text-align: left; margin-top: 30px; }
         .policy-item { background: rgba(255, 255, 255, 0.3); padding: 20px; border-radius: 12px; border: 1px solid rgba(255, 255, 255, 0.2); }
         .policy-item h4 { margin: 0 0 10px 0; color: var(--forest); display: flex; align-items: center; gap: 10px; }
+        .policy-text { font-size: 0.9rem; margin: 0; }
 
         .wa-float { position: fixed; bottom: 30px; right: 30px; background: #25d366; color: white; width: 65px; height: 65px; border-radius: 50px; display: flex; align-items: center; justify-content: center; font-size: 35px; z-index: 1000; box-shadow: 0 10px 25px rgba(37, 211, 102, 0.4); }
 
@@ -116,6 +123,22 @@
         </div>
 
         <div class="glass-card">
+            <h2>Guest Reviews</h2>
+            <div class="reviews-grid">
+                <div class="review-card">
+                    <div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                    <p>"Great stay and experience. Staff are helpful. Spacious room and good for a weekend getaway."</p>
+                    <span class="guest-name">- Ayuska Choudhary</span>
+                </div>
+                <div class="review-card">
+                    <div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                    <p>"One of the finest basecamp in Lonavala and value for money"</p>
+                    <span class="guest-name">- Afreen Shaikh</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="glass-card">
             <h2>Explore Nearby</h2>
             <div style="text-align: left; display: inline-block; width: 100%; max-width: 600px;">
                 <p><i class="fas fa-map-marker-alt" style="color: #c0392b;"></i> <b>Varsoli Devi Temple:</b> 2 mins walk</p>
@@ -134,20 +157,41 @@
         </div>
 
         <div class="glass-card">
-            <h2>Policies & House Rules</h2>
+            <h2>Policies, Terms & Conditions</h2>
             <div class="policy-grid">
                 <div class="policy-item">
-                    <h4><i class="fas fa-swimming-pool"></i> Pool Rules</h4>
-                    <p class="policy-text">Compulsory swimwear. No cotton. Infants/toddlers must wear swimmer diapers.</p>
+                    <h4><i class="fas fa-undo"></i> Cancellation</h4>
+                    <p class="policy-text">Any postponement treated as cancellation. Booking amount is non-refundable.</p>
                 </div>
                 <div class="policy-item">
-                    <h4><i class="fas fa-id-card"></i> Check-in</h4>
-                    <p class="policy-text">12:00 PM Check-in | 10:30 AM Check-out. Valid ID mandatory for all guests.</p>
+                    <h4><i class="fas fa-clock"></i> Timings</h4>
+                    <p class="policy-text">Check-in: 12:00 PM | Check-out: 10:30 AM. Early/Late timings are chargeable.</p>
                 </div>
                 <div class="policy-item">
-                    <h4><i class="fas fa-users-slash"></i> Visitors & Local</h4>
-                    <p class="policy-text">Visitors not allowed in rooms. Local residents may be denied entry.</p>
+                    <h4><i class="fas fa-id-card"></i> Identification</h4>
+                    <p class="policy-text">18+ only. Valid Aadhar, License, Voter ID, or Passport mandatory for all guests.</p>
                 </div>
+                <div class="policy-item">
+                    <h4><i class="fas fa-users-slash"></i> Residents & Visitors</h4>
+                    <p class="policy-text">Local residents may be denied. Visitors are strictly not allowed in guest rooms.</p>
+                </div>
+                <div class="policy-item">
+                    <h4><i class="fas fa-swimming-pool"></i> Pool & Swimwear</h4>
+                    <p class="policy-text">Compulsory swimwear. No cotton clothes. Infants/toddlers must wear swimmer diapers.</p>
+                </div>
+                <div class="policy-item">
+                    <h4><i class="fas fa-ban"></i> Prohibited Conduct</h4>
+                    <p class="policy-text">No outside food, induction cookers, or smoking in rooms. No decorations allowed.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="glass-card">
+            <h2>Child Policy & Disclaimer</h2>
+            <div style="text-align: left; display: inline-block; max-width: 800px;">
+                <p>• <b>Child Policy:</b> 1 child under 5 free in same room. Guests above 5 are adults. Extra bed: INR 1500.</p>
+                <p>• <b>Couples Policy:</b> Accommodation can be denied without suitable proof of ID. No refund applicable.</p>
+                <p>• <b>Disclaimer:</b> Camp reserves the right to amend terms anytime without notice or assigning reasons.</p>
             </div>
         </div>
 
@@ -165,7 +209,7 @@
     <a href="https://wa.me/919607772227" class="wa-float" target="_blank"><i class="fab fa-whatsapp"></i></a>
 
     <script>
-        // Lightbox Modal Logic
+        // Modal Logic
         function openModal(imgSrc) {
             document.getElementById("imgModal").style.display = "block";
             document.getElementById("modalImg").src = imgSrc;
@@ -178,7 +222,7 @@
             if (event.target == modal) { closeModal(); }
         }
 
-        // WhatsApp Logic
+        // WhatsApp Booking Logic
         function sendWhatsApp() {
             const checkin = document.getElementById('checkin').value;
             const checkout = document.getElementById('checkout').value;
