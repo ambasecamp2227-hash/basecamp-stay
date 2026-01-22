@@ -258,51 +258,54 @@
 
         // Automatic price calculation and availability check
         function calculatePrice() {
-            const checkinVal = document.getElementById('checkin').value;
-            const checkoutVal = document.getElementById('checkout').value;
-            const btn = document.getElementById('book-now-btn');
-            const display = document.getElementById('price-display');
+    const ciVal = document.getElementById('checkin').value;
+    const coVal = document.getElementById('checkout').value;
+    const roomsQty = parseInt(document.getElementById('rooms_qty').value);
+    const btn = document.getElementById('book-now-btn');
+    const display = document.getElementById('price-display');
 
-            if (!checkinVal || !checkoutVal) return;
+    if (!ciVal || !coVal) return;
 
-            const checkin = new Date(checkinVal);
-            const checkout = new Date(checkoutVal);
+    const ci = new Date(ciVal);
+    const co = new Date(coVal);
 
-            if (checkout <= checkin) {
-                display.innerText = "Check-out must be after check-in";
-                btn.disabled = true;
-                return;
-            }
+    if (co <= ci) {
+        display.innerText = "Invalid Dates";
+        btn.disabled = true;
+        return;
+    }
 
-            let total = 0;
-            let tempDate = new Date(checkin);
-            let isSoldOut = false;
+    let totalPerRoom = 0;
+    let tempDate = new Date(ci);
+    let soldOut = false;
 
-            while (tempDate < checkout) {
-                const dateStr = tempDate.toISOString().split('T')[0];
-                
-                // 5-Room Availability Logic
-                if (bookedDates[dateStr] >= 5) {
-                    isSoldOut = true;
-                    break;
-                }
-                
-                // Pricing Logic: Weekend (Fri/Sat/Sun) = 3500, Weekday = 2500
-                const day = tempDate.getDay();
-                total += (day === 0 || day === 5 || day === 6) ? 3500 : 2500;
-                tempDate.setDate(tempDate.getDate() + 1);
-            }
-
-            if (isSoldOut) {
-                display.innerText = "SOLD OUT FOR SELECTED DATES";
-                display.style.color = "red";
-                btn.disabled = true;
-            } else {
-                display.innerText = "Total Amount: ₹" + total;
-                display.style.color = "var(--forest)";
-                btn.disabled = false;
-            }
+    while (tempDate < co) {
+        const dateStr = tempDate.toISOString().split('T')[0];
+        const alreadyBooked = bookedDates[dateStr] || 0;
+        
+        // Logic: (Already Booked in Sheet + What Guest wants now) cannot exceed 5
+        if (alreadyBooked + roomsQty > 5) {
+            soldOut = true;
+            break;
         }
+
+        const day = tempDate.getDay();
+        // Friday, Saturday, Sunday = 3500, Others = 2500
+        totalPerRoom += (day === 0 || day === 5 || day === 6) ? 3500 : 2500;
+        tempDate.setDate(tempDate.getDate() + 1);
+    }
+
+    if (soldOut) {
+        display.innerText = "NOT ENOUGH ROOMS AVAILABLE";
+        display.style.color = "red";
+        btn.disabled = true;
+    } else {
+        const finalTotal = totalPerRoom * roomsQty;
+        display.innerText = "Total: ₹" + finalTotal;
+        display.style.color = "var(--forest)";
+        btn.disabled = false;
+    }
+}
 
         function openModal(imgSrc) {
             document.getElementById("imgModal").style.display = "block";
