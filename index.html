@@ -36,12 +36,55 @@
         
         h1 { font-size: 4rem; margin-bottom: 0.5rem; }
 
-        .cta-btn { 
-            background: var(--earth); color: var(--dark); padding: 18px 40px; 
-            text-decoration: none; font-weight: bold; border-radius: 50px; 
-            transition: 0.3s; box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        /* Booking Bar Styles */
+        .booking-bar {
+            background: white;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            padding: 15px;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            margin-top: -50px; /* Pulls it up into the Hero section */
+            position: relative;
+            z-index: 10;
+            max-width: 90%;
+            margin-left: auto;
+            margin-right: auto;
         }
-        .cta-btn:hover { transform: translateY(-3px); box-shadow: 0 6px 20px rgba(0,0,0,0.4); }
+        .booking-item {
+            padding: 10px 20px;
+            border-right: 1px solid #eee;
+            text-align: left;
+            min-width: 150px;
+        }
+        .booking-item:last-of-type { border-right: none; }
+        .booking-item label {
+            display: block;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            color: #888;
+            margin-bottom: 5px;
+        }
+        .booking-item input, .booking-item select {
+            border: none;
+            font-weight: bold;
+            font-size: 1rem;
+            font-family: inherit;
+            width: 100%;
+            background: transparent;
+        }
+        .book-btn {
+            background: #c0392b; /* Deep Red for action */
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-left: 10px;
+            text-transform: uppercase;
+        }
 
         /* Glassmorphism Cards */
         .glass-card {
@@ -54,21 +97,6 @@
             margin-top: 30px;
         }
 
-        /* Lists & Grids */
-        .rules-list { text-align: left; display: inline-block; max-width: 700px; margin: 20px auto; }
-        .rule-item { display: flex; align-items: center; margin-bottom: 12px; font-size: 1.05rem; }
-        .rule-item i { color: var(--forest); margin-right: 15px; width: 20px; text-align: center; }
-
-        .policy-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; text-align: left; margin-top: 30px; }
-        .policy-item { background: rgba(255, 255, 255, 0.3); padding: 20px; border-radius: 12px; border: 1px solid rgba(255, 255, 255, 0.2); }
-        .policy-item h4 { margin-top: 0; color: var(--forest); display: flex; align-items: center; gap: 10px; }
-
-        .reviews-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; margin-top: 30px; }
-        .review-card { background: rgba(255, 255, 255, 0.4); padding: 25px; border-radius: 15px; text-align: left; border: 1px solid rgba(255, 255, 255, 0.2); }
-        .stars { color: #f1c40f; margin-bottom: 10px; }
-        .guest-name { font-weight: bold; display: block; margin-top: 15px; color: var(--forest); }
-
-        .video-container { width: 100%; border-radius: 15px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.2); margin-top: 20px; }
         .gallery-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; margin-top: 30px; }
         .gallery-item { width: 100%; height: 300px; object-fit: cover; border-radius: 15px; box-shadow: 0 10px 20px rgba(0,0,0,0.1); transition: 0.4s; }
         .gallery-item:hover { transform: scale(1.03); }
@@ -79,9 +107,14 @@
         .price-tag { color: var(--forest); font-weight: bold; font-size: 1.2rem; }
 
         .map-btn { display: inline-block; background: #4285F4; color: white; padding: 15px 30px; text-decoration: none; border-radius: 12px; margin-top: 20px; font-weight: bold; transition: 0.3s; }
-        .map-btn:hover { background: #357ae8; transform: translateY(-2px); }
-
         .wa-float { position: fixed; bottom: 30px; right: 30px; background: #25d366; color: white; width: 65px; height: 65px; border-radius: 50px; display: flex; align-items: center; justify-content: center; font-size: 35px; z-index: 1000; box-shadow: 0 10px 25px rgba(37, 211, 102, 0.4); }
+
+        @media (max-width: 768px) {
+            .booking-bar { flex-direction: column; margin-top: 20px; }
+            .booking-item { border-right: none; border-bottom: 1px solid #eee; }
+            .book-btn { margin: 15px 0 0 0; }
+            h1 { font-size: 2.5rem; }
+        }
     </style>
 </head>
 <body>
@@ -89,8 +122,29 @@
     <header>
         <h1>Basecamp Stay</h1>
         <p style="font-size: 1.5rem;">Adventure Awaits in Lonavala</p>
-        <a href="https://wa.me/919607772227" class="cta-btn">Check Availability</a>
     </header>
+
+    <div class="booking-bar">
+        <div class="booking-item">
+            <label>Check-in</label>
+            <input type="date" value="2026-01-22">
+        </div>
+        <div class="booking-item">
+            <label>Check-out</label>
+            <input type="date" value="2026-01-23">
+        </div>
+        <div class="booking-item">
+            <label>Rooms & Guests</label>
+            <select>
+                <option>1 Room, 2 Adults</option>
+                <option>1 Room, 4 Adults</option>
+                <option>Full Villa</option>
+            </select>
+        </div>
+        <button class="book-btn" onclick="window.location.href='https://wa.me/919607772227'">
+            Book Now
+        </button>
+    </div>
 
     <div class="container">
         <h2>Experience the Vibe</h2>
@@ -102,32 +156,6 @@
         </div>
 
         <div class="glass-card">
-            <h2>Take a Virtual Tour</h2>
-            <div class="video-container">
-                <video width="100%" height="auto" controls muted autoplay loop>
-                    <source src="tour.mp4" type="video/mp4">
-                    Your browser does not support the video tag.
-                </video>
-            </div>
-        </div>
-
-        <div class="glass-card">
-            <h2>What Our Guests Say</h2>
-            <div class="reviews-grid">
-                <div class="review-card">
-                    <div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
-                    <p>"Great stay and experience. Staff are helpful. Spacious room and good for a weekend getaway."</p>
-                    <span class="guest-name">- Ayuska Choudhary</span>
-                </div>
-                <div class="review-card">
-                    <div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
-                    <p>"One of the finest basecamp in Lonavala and value for money"</p>
-                    <span class="guest-name">- Afreen Shaikh</span>
-                </div>
-            </div>
-        </div>
-
-        <div class="glass-card">
             <h2>Tariff & Packages</h2>
             <table class="pricing-table">
                 <thead><tr><th>Room Type</th><th>Weekday</th><th>Weekend</th></tr></thead>
@@ -135,40 +163,10 @@
             </table>
         </div>
 
-        <div class="glass-card">
-            <h2>House Rules</h2>
-            <div class="rules-list">
-                <div class="rule-item"><i class="fas fa-clock"></i><span>Check-in: 12:00 PM | Check-out: 10:30 AM</span></div>
-                <div class="rule-item"><i class="fas fa-id-card"></i><span>Valid Photo ID mandatory for all guests (Aadhar, License, Passport).</span></div>
-                <div class="rule-item"><i class="fas fa-swimmer"></i><span>Proper swimwear compulsory for pool use (No cotton clothes).</span></div>
-                <div class="rule-item"><i class="fas fa-ban"></i><span>No outside food, induction cookers, or smoking in rooms.</span></div>
-                <div class="rule-item"><i class="fas fa-users-slash"></i><span>Visitors not allowed in guest rooms. No room decorations.</span></div>
-            </div>
-        </div>
-
-        <div class="glass-card">
-            <h2>Policies & Disclaimer</h2>
-            <div class="policy-grid">
-                <div class="policy-item">
-                    <h4><i class="fas fa-undo"></i> Cancellation</h4>
-                    <p class="policy-text">Any postponement is treated as a cancellation. Booking amounts are non-refundable.</p>
-                </div>
-                <div class="policy-item">
-                    <h4><i class="fas fa-child"></i> Extra Bed</h4>
-                    <p class="policy-text">Child under 5 free. Guests above 5 treated as adults. Extra bed: INR 1500.</p>
-                </div>
-                <div class="policy-item">
-                    <h4><i class="fas fa-user-shield"></i> Local Policy</h4>
-                    <p class="policy-text">Camp may deny local residents or couples without suitable ID proof. No refund applicable.</p>
-                </div>
-            </div>
-            <p style="font-size: 0.8rem; margin-top: 25px; opacity: 0.7;">*Disclaimer: Camp reserves the right to amend terms anytime without notice at its sole discretion.</p>
-        </div>
-
         <div class="glass-card" style="margin-top: 60px;">
             <h2>Find Your Way</h2>
             <p>📍 183-184, Varsoli Village, Mawal, Lonavala.</p>
-            <a href="https://www.google.com/maps/contrib/106543642932267708213/reviews" class="map-btn" target="_blank">
+            <a href="https://maps.app.goo.gl/ChIJFRJYkZkB6DsRUrcnd2FPbIA" class="map-btn" target="_blank">
                 <i class="fas fa-directions"></i> Get Directions
             </a>
         </div>
