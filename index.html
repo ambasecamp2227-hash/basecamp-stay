@@ -139,6 +139,25 @@
         </div>
 
         <div class="glass-card">
+            <h2>Wedding & Events</h2>
+            <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 30px; text-align: left;">
+                <div style="flex: 1; min-width: 300px;">
+                    <p>Celebrate your special milestones at <b>Basecamp Stay</b>. Our open lawn area and mountain views provide the perfect backdrop for intimate gatherings.</p>
+                    <ul style="list-style: none; padding: 0;">
+                        <li><i class="fas fa-heart" style="color: #c0392b; margin-right: 10px;"></i> <b>Intimate Weddings & Engagements</b></li>
+                        <li><i class="fas fa-cake-candles" style="color: #c0392b; margin-right: 10px;"></i> <b>Birthday Parties & Private Events</b></li>
+                        <li><i class="fas fa-users" style="color: #c0392b; margin-right: 10px;"></i> <b>Self-Help Group & Corporate Meets</b></li>
+                    </ul>
+                    <p><b>Event Capacity:</b> Up to 100 Guests (Lawn) | 20 Guests (Stay)</p>
+                </div>
+                <div style="flex: 1; min-width: 300px;">
+                    <img src="View.jpg" style="width: 100%; border-radius: 15px; box-shadow: 0 10px 20px rgba(0,0,0,0.1);" alt="Lawn View">
+                </div>
+            </div>
+            <button class="book-btn" style="margin-top: 20px; background: var(--forest);" onclick="sendWeddingInquiry()">Inquire for Events</button>
+        </div>
+
+        <div class="glass-card">
             <h2>Explore Nearby</h2>
             <div style="text-align: left; display: inline-block; width: 100%; max-width: 600px;">
                 <p><i class="fas fa-map-marker-alt" style="color: #c0392b;"></i> <b>Varsoli Devi Temple:</b> 2 mins walk</p>
@@ -228,6 +247,12 @@
             const checkout = document.getElementById('checkout').value;
             const guests = document.getElementById('guests').value;
             const message = `Hi Basecamp Stay! I would like to book a stay.%0A%0ACheck-in: ${checkin}%0ACheck-out: ${checkout}%0AGuests: ${guests}`;
+            window.open(`https://wa.me/919607772227?text=${message}`, '_blank');
+        }
+
+        // Wedding Inquiry Logic
+        function sendWeddingInquiry() {
+            const message = `Hi Basecamp Stay! I'm interested in booking your space for an event. Please share details regarding lawn capacity and wedding packages.`;
             window.open(`https://wa.me/919607772227?text=${message}`, '_blank');
         }
     </script>
