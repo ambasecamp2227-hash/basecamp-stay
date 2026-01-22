@@ -11,7 +11,6 @@
             --earth: #d4a373; 
             --white: #ffffff; 
             --dark: #1a1a1a; 
-            /* Modern Gradient Background */
             --bg-gradient: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
         }
         
@@ -20,7 +19,7 @@
             margin: 0; 
             color: var(--dark); 
             line-height: 1.6;
-            background: var(--bg-gradient); /* Added the happening background */
+            background: var(--bg-gradient);
             background-attachment: fixed;
         }
 
@@ -53,6 +52,15 @@
             border: 1px solid rgba(255, 255, 255, 0.3);
             box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
             margin-top: 30px;
+        }
+
+        /* Video Styling */
+        .video-container {
+            width: 100%;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            margin-top: 20px;
         }
 
         /* Gallery Grid */
@@ -104,6 +112,17 @@
         </div>
 
         <div class="glass-card">
+            <h2>Take a Virtual Tour</h2>
+            <p>Explore the comfort and views of Basecamp Stay.</p>
+            <div class="video-container">
+                <video width="100%" height="auto" controls muted autoplay loop>
+                    <source src="tour.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+
+        <div class="glass-card">
             <h2>Tariff & Packages</h2>
             <table class="pricing-table">
                 <thead>
@@ -122,7 +141,7 @@
         <div class="glass-card" style="margin-top: 60px;">
             <h2>Find Your Way</h2>
             <p>📍 183-184, Varsoli Village, Mawal, Lonavala.</p>
-            <a href="https://maps.app.goo.gl/95pXidL56v3rFm7C7" class="map-btn" target="_blank">
+            <a href="https://www.google.com/maps/contrib/106543642932267708213/reviews" class="map-btn" target="_blank">
                 <i class="fas fa-directions"></i> Get Directions
             </a>
         </div>
