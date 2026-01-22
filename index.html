@@ -200,13 +200,16 @@
     <script>
         let bookedDates = {};
 
+        // 1. Fetch Availability from Google Sheet
         async function fetchAvailability() {
             try {
                 const response = await fetch('https://script.google.com/macros/s/AKfycbwN-bxtqoXPf44fnb9YlcnQNsQFznz9DEwPIiZGDNaYi8xbngGfbeJBkXmaAUio2T0/exec');
                 bookedDates = await response.json();
+                console.log("Availability Synced");
             } catch (e) { console.log("Offline mode"); }
         }
 
+        // 2. Automatic Price & Availability Logic
         function calculatePrice() {
             const checkin = new Date(document.getElementById('checkin').value);
             const checkout = new Date(document.getElementById('checkout').value);
@@ -245,6 +248,7 @@
             }
         }
 
+        // 3. Scroll Animation Logic
         window.addEventListener('scroll', () => {
             var reveals = document.querySelectorAll('.reveal');
             reveals.forEach(el => {
@@ -252,6 +256,7 @@
             });
         });
 
+        // 4. Interaction Logic
         function openModal(src) { document.getElementById("imgModal").style.display = "block"; document.getElementById("modalImg").src = src; }
         function closeModal() { document.getElementById("imgModal").style.display = "none"; }
         function sendWhatsApp() {
