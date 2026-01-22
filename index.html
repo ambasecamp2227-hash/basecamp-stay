@@ -318,13 +318,21 @@
             if (event.target == document.getElementById("imgModal")) { closeModal(); }
         }
         function sendWhatsApp() {
-            const checkin = document.getElementById('checkin').value;
-            const checkout = document.getElementById('checkout').value;
-            const guests = document.getElementById('guests').value;
-            const price = document.getElementById('price-display').innerText;
-            const message = `Hi Basecamp Stay! I would like to book a stay.%0A%0ACheck-in: ${checkin}%0ACheck-out: ${checkout}%0AGuests: ${guests}%0A${price}`;
-            window.open(`https://wa.me/919607772227?text=${message}`, '_blank');
-        }
+    const ci = document.getElementById('checkin').value;
+    const co = document.getElementById('checkout').value;
+    const guests = document.getElementById('guests').value;
+    const rooms = document.getElementById('rooms_qty').value;
+    const price = document.getElementById('price-display').innerText;
+
+    const message = `*NEW BOOKING REQUEST*%0A` +
+                    `Check-in: ${ci}%0A` +
+                    `Check-out: ${co}%0A` +
+                    `Rooms: ${rooms}%0A` +
+                    `Guests: ${guests}%0A` +
+                    `${price}`;
+
+    window.open(`https://wa.me/919607772227?text=${message}`, '_blank');
+}
         function sendWeddingInquiry() {
             const message = `Hi Basecamp Stay! I'm interested in booking your space for an event. Please share details regarding lawn capacity and wedding packages.`;
             window.open(`https://wa.me/919607772227?text=${message}`, '_blank');
