@@ -13,7 +13,7 @@
         html { scroll-behavior: smooth; }
         body { font-family: 'Segoe UI', sans-serif; margin: 0; background: var(--bg-gradient); background-attachment: fixed; color: var(--dark); line-height: 1.6; }
         
-        /* Navigation with Logo Integration */
+        /* Navigation */
         nav {
             background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px);
             padding: 10px 5%; position: fixed; top: 0; width: 90%; z-index: 1000;
@@ -65,6 +65,11 @@
         .pricing-table th { background: var(--forest); color: white; padding: 20px; }
         .pricing-table td { padding: 20px; background: rgba(255,255,255,0.5); border-bottom: 1px solid rgba(0,0,0,0.05); }
 
+        .policy-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; text-align: left; margin-top: 30px; }
+        .policy-item { background: rgba(255, 255, 255, 0.3); padding: 20px; border-radius: 12px; border: 1px solid rgba(255, 255, 255, 0.2); }
+        .policy-item h4 { margin: 0 0 10px 0; color: var(--forest); display: flex; align-items: center; gap: 10px; }
+        .policy-text { font-size: 0.9rem; margin: 0; }
+
         .wa-float { position: fixed; bottom: 30px; right: 30px; background: #25d366; color: white; width: 65px; height: 65px; border-radius: 50px; display: flex; align-items: center; justify-content: center; font-size: 35px; z-index: 1000; box-shadow: 0 10px 25px rgba(37, 211, 102, 0.4); }
 
         @media (max-width: 768px) {
@@ -80,9 +85,7 @@
 
     <nav>
         <div class="logo-container">
-            <a href="#home">
-                <img src="Black on Transparent.png" alt="Basecamp Stay Logo">
-            </a>
+            <a href="#home"><img src="Black on Transparent.png" alt="Basecamp Stay Logo"></a>
         </div>
         <div class="nav-links">
             <a href="#home">Home</a>
@@ -90,6 +93,7 @@
             <a href="#reviews">Reviews</a>
             <a href="#events">Events</a>
             <a href="#tariff">Prices</a>
+            <a href="#rules">Rules</a>
             <a href="#location">Location</a>
         </div>
     </nav>
@@ -178,6 +182,36 @@
                 <thead><tr><th>Room Type</th><th>Weekday</th><th>Weekend</th></tr></thead>
                 <tbody><tr><td>Container Room</td><td><b>₹2,500</b></td><td><b>₹3,500</b></td></tr></tbody>
             </table>
+        </div>
+
+        <div class="glass-card" id="rules">
+            <h2>Policies & House Rules</h2>
+            <div class="policy-grid">
+                <div class="policy-item">
+                    <h4><i class="fas fa-undo"></i> Cancellation</h4>
+                    <p class="policy-text">Postponement treated as cancellation. Booking amount is non-refundable.</p>
+                </div>
+                <div class="policy-item">
+                    <h4><i class="fas fa-id-card"></i> Identification</h4>
+                    <p class="policy-text">18+ only. Valid Aadhar, License, or Passport mandatory for all guests.</p>
+                </div>
+                <div class="policy-item">
+                    <h4><i class="fas fa-swimming-pool"></i> Pool Rules</h4>
+                    <p class="policy-text">Compulsory swimwear. No cotton. Toddlers must wear swimmer diapers.</p>
+                </div>
+                <div class="policy-item">
+                    <h4><i class="fas fa-child"></i> Child Policy</h4>
+                    <p class="policy-text">1 child under 5 free. Guests above 5 are adults. Extra bed: INR 1500.</p>
+                </div>
+                <div class="policy-item">
+                    <h4><i class="fas fa-ban"></i> Prohibited</h4>
+                    <p class="policy-text">No outside food, induction cookers, or smoking in rooms. No decorations.</p>
+                </div>
+                <div class="policy-item">
+                    <h4><i class="fas fa-users-slash"></i> Residents</h4>
+                    <p class="policy-text">Visitors not allowed in rooms. Local residents may be denied entry.</p>
+                </div>
+            </div>
         </div>
 
         <div class="glass-card" id="location">
