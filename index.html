@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Basecamp Stay Lonavala | Adventure & Comfort</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/themes/material_green.css">
+    
     <style>
         :root { 
             --forest: #2e4d23; --earth: #d4a373; --white: #ffffff; --dark: #1a1a1a; 
@@ -36,14 +39,14 @@
         h1 { font-size: 4rem; margin: 0; }
 
         .booking-bar {
-            background: white; display: flex; flex-wrap: wrap; justify-content: center;
+            background: white; display: flex; flex-wrap: wrap; justify-content: center; align-items: center;
             padding: 15px; border-radius: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.2);
             margin: -50px auto 0; position: relative; z-index: 10; max-width: 90%;
         }
-        .booking-item { padding: 10px 20px; border-right: 1px solid #eee; text-align: left; min-width: 150px; }
+        .booking-item { padding: 10px 20px; border-right: 1px solid #eee; text-align: left; min-width: 200px; }
         .booking-item:last-of-type { border-right: none; }
-        .booking-item label { display: block; font-size: 0.75rem; text-transform: uppercase; color: #888; }
-        .booking-item input, .booking-item select { border: none; font-weight: bold; font-size: 1rem; width: 100%; outline: none; background: transparent; }
+        .booking-item label { display: block; font-size: 0.75rem; text-transform: uppercase; color: #888; margin-bottom: 5px;}
+        .booking-item input, .booking-item select { border: none; font-weight: bold; font-size: 1rem; width: 100%; outline: none; background: transparent; cursor: pointer; }
         .book-btn { background: #c0392b; color: white; border: none; padding: 15px 40px; border-radius: 8px; font-weight: bold; cursor: pointer; text-transform: uppercase; transition: 0.3s; }
         .book-btn:disabled { background: #ccc; cursor: not-allowed; }
 
@@ -75,8 +78,8 @@
         @media (max-width: 768px) {
             nav { flex-direction: column; padding: 10px; height: auto; width: 100%; left: 0; }
             .nav-links { gap: 10px; margin-top: 10px; flex-wrap: wrap; justify-content: center; }
-            .booking-bar { flex-direction: column; margin-top: 20px; }
-            .booking-item { border-right: none; border-bottom: 1px solid #eee; }
+            .booking-bar { flex-direction: column; margin-top: 20px; width: 95%; }
+            .booking-item { border-right: none; border-bottom: 1px solid #eee; width: 80%; }
             h1 { font-size: 2.5rem; }
         }
     </style>
@@ -105,31 +108,32 @@
 
     <div class="booking-bar">
         <div class="booking-item">
-            <label>Check-in</label>
-            <input type="date" id="checkin" onchange="calculatePrice()">
+            <label><i class="fas fa-calendar-alt"></i> Dates of Stay</label>
+            <input type="text" id="date-range" placeholder="Select Dates">
+            <input type="hidden" id="checkin">
+            <input type="hidden" id="checkout">
         </div>
+        
         <div class="booking-item">
-            <label>Check-out</label>
-            <input type="date" id="checkout" onchange="calculatePrice()">
-        </div>
-        <div class="booking-item">
-            <label>Guests</label>
+            <label><i class="fas fa-user"></i> Guests</label>
             <select id="guests">
                 <option value="2 Adults">2 Adults</option>
+                <option value="3 Adults">3 Adults</option>
+                <option value="4 Adults">4 Adults</option>
             </select>
-        <div class="booking-item">
-    <label>Rooms Required</label>
-    <select id="rooms_qty" onchange="calculatePrice()">
-        <option value="1">1 Room</option>
-        <option value="2">2 Rooms</option>
-        <option value="3">3 Rooms</option>
-        <option value="4">4 Rooms</option>
-        <option value="5">5 Rooms</option>
-    </select>
-</div>
-
-<div id="price-display" style="font-weight: bold; color: var(--forest); margin: 10px 0;">Select Dates</div>
         </div>
+
+        <div class="booking-item">
+            <label><i class="fas fa-bed"></i> Rooms Required</label>
+            <select id="rooms_qty" onchange="calculatePrice()">
+                <option value="1">1 Room</option>
+                <option value="2">2 Rooms</option>
+                <option value="3">3 Rooms</option>
+                <option value="4">4 Rooms</option>
+                <option value="5">5 Rooms</option>
+            </select>
+        </div>
+
         <div style="padding: 10px 20px; text-align: center;">
             <div id="price-display" style="font-weight: bold; color: var(--forest); margin-bottom: 5px;">Select Dates</div>
             <button class="book-btn" id="book-now-btn" onclick="sendWhatsApp()">Book Now</button>
@@ -242,8 +246,27 @@
 
     <a href="https://wa.me/919607772227" class="wa-float" target="_blank"><i class="fab fa-whatsapp"></i></a>
 
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
     <script>
         let bookedDates = {};
+
+        // 1. Initialize Flatpickr for Range Selection
+        flatpickr("#date-range", {
+            mode: "range",
+            minDate: "today",
+            dateFormat: "Y-m-d",
+            altInput: true,
+            altFormat: "F j, Y",
+            onChange: function(selectedDates) {
+                if (selectedDates.length === 2) {
+                    // Map calendar dates back to your original logic inputs
+                    document.getElementById('checkin').value = selectedDates[0].toISOString().split('T')[0];
+                    document.getElementById('checkout').value = selectedDates[1].toISOString().split('T')[0];
+                    calculatePrice(); // Trigger your existing logic
+                }
+            }
+        });
 
         // Fetch availability from your Google Script URL
         async function fetchAvailability() {
@@ -256,56 +279,47 @@
             }
         }
 
-        // Automatic price calculation and availability check
         function calculatePrice() {
-    const ciVal = document.getElementById('checkin').value;
-    const coVal = document.getElementById('checkout').value;
-    const roomsQty = parseInt(document.getElementById('rooms_qty').value);
-    const btn = document.getElementById('book-now-btn');
-    const display = document.getElementById('price-display');
+            const ciVal = document.getElementById('checkin').value;
+            const coVal = document.getElementById('checkout').value;
+            const roomsQty = parseInt(document.getElementById('rooms_qty').value);
+            const btn = document.getElementById('book-now-btn');
+            const display = document.getElementById('price-display');
 
-    if (!ciVal || !coVal) return;
+            if (!ciVal || !coVal) return;
 
-    const ci = new Date(ciVal);
-    const co = new Date(coVal);
+            const ci = new Date(ciVal);
+            const co = new Date(coVal);
 
-    if (co <= ci) {
-        display.innerText = "Invalid Dates";
-        btn.disabled = true;
-        return;
-    }
+            let totalPerRoom = 0;
+            let tempDate = new Date(ci);
+            let soldOut = false;
 
-    let totalPerRoom = 0;
-    let tempDate = new Date(ci);
-    let soldOut = false;
+            while (tempDate < co) {
+                const dateStr = tempDate.toISOString().split('T')[0];
+                const alreadyBooked = bookedDates[dateStr] || 0;
+                
+                if (alreadyBooked + roomsQty > 5) {
+                    soldOut = true;
+                    break;
+                }
 
-    while (tempDate < co) {
-        const dateStr = tempDate.toISOString().split('T')[0];
-        const alreadyBooked = bookedDates[dateStr] || 0;
-        
-        // Logic: (Already Booked in Sheet + What Guest wants now) cannot exceed 5
-        if (alreadyBooked + roomsQty > 5) {
-            soldOut = true;
-            break;
+                const day = tempDate.getDay();
+                totalPerRoom += (day === 0 || day === 5 || day === 6) ? 3500 : 2500;
+                tempDate.setDate(tempDate.getDate() + 1);
+            }
+
+            if (soldOut) {
+                display.innerText = "NOT ENOUGH ROOMS AVAILABLE";
+                display.style.color = "red";
+                btn.disabled = true;
+            } else {
+                const finalTotal = totalPerRoom * roomsQty;
+                display.innerText = "Total: ₹" + finalTotal.toLocaleString('en-IN');
+                display.style.color = "var(--forest)";
+                btn.disabled = false;
+            }
         }
-
-        const day = tempDate.getDay();
-        // Friday, Saturday, Sunday = 3500, Others = 2500
-        totalPerRoom += (day === 0 || day === 5 || day === 6) ? 3500 : 2500;
-        tempDate.setDate(tempDate.getDate() + 1);
-    }
-
-    if (soldOut) {
-        display.innerText = "NOT ENOUGH ROOMS AVAILABLE";
-        display.style.color = "red";
-        btn.disabled = true;
-    } else {
-        const finalTotal = totalPerRoom * roomsQty;
-        display.innerText = "Total: ₹" + finalTotal;
-        display.style.color = "var(--forest)";
-        btn.disabled = false;
-    }
-}
 
         function openModal(imgSrc) {
             document.getElementById("imgModal").style.display = "block";
@@ -318,21 +332,21 @@
             if (event.target == document.getElementById("imgModal")) { closeModal(); }
         }
         function sendWhatsApp() {
-    const ci = document.getElementById('checkin').value;
-    const co = document.getElementById('checkout').value;
-    const guests = document.getElementById('guests').value;
-    const rooms = document.getElementById('rooms_qty').value;
-    const price = document.getElementById('price-display').innerText;
+            const ci = document.getElementById('checkin').value;
+            const co = document.getElementById('checkout').value;
+            const guests = document.getElementById('guests').value;
+            const rooms = document.getElementById('rooms_qty').value;
+            const price = document.getElementById('price-display').innerText;
 
-    const message = `*NEW BOOKING REQUEST*%0A` +
-                    `Check-in: ${ci}%0A` +
-                    `Check-out: ${co}%0A` +
-                    `Rooms: ${rooms}%0A` +
-                    `Guests: ${guests}%0A` +
-                    `${price}`;
+            const message = `*NEW BOOKING REQUEST*%0A` +
+                            `Check-in: ${ci}%0A` +
+                            `Check-out: ${co}%0A` +
+                            `Rooms: ${rooms}%0A` +
+                            `Guests: ${guests}%0A` +
+                            `${price}`;
 
-    window.open(`https://wa.me/919607772227?text=${message}`, '_blank');
-}
+            window.open(`https://wa.me/919607772227?text=${message}`, '_blank');
+        }
         function sendWeddingInquiry() {
             const message = `Hi Basecamp Stay! I'm interested in booking your space for an event. Please share details regarding lawn capacity and wedding packages.`;
             window.open(`https://wa.me/919607772227?text=${message}`, '_blank');
