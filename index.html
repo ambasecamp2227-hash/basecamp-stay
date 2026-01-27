@@ -64,9 +64,17 @@
         .close { position: absolute; top: 20px; right: 35px; color: #fff; font-size: 40px; font-weight: bold; cursor: pointer; }
         @keyframes zoom { from {transform:scale(0)} to {transform:scale(1)} }
 
-        .pricing-table { width: 100%; border-collapse: collapse; overflow: hidden; border-radius: 15px; margin-top: 20px; }
-        .pricing-table th { background: var(--forest); color: white; padding: 20px; }
-        .pricing-table td { padding: 20px; background: rgba(255,255,255,0.5); border-bottom: 1px solid rgba(0,0,0,0.05); }
+        /* Feature Icons Styling */
+        .feature-item { text-align: center; min-width: 110px; flex: 1; }
+        .feature-item i { font-size: 1.8rem; color: var(--forest); display: block; margin-bottom: 10px; }
+        .feature-item span { font-size: 0.75rem; font-weight: bold; text-transform: uppercase; color: var(--dark); }
+
+        /* Pricing Card Styling */
+        .price-card { background: rgba(255,255,255,0.5); padding: 25px; border-radius: 15px; border: 1px solid var(--white); transition: 0.3s; }
+        .price-card:hover { transform: translateY(-5px); background: rgba(255,255,255,0.8); }
+        .price-label { color: #888; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px; }
+        .price-value { font-size: 2rem; font-weight: bold; color: var(--forest); margin: 5px 0; }
+        .price-sub { font-size: 0.85rem; color: #555; }
 
         .policy-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; text-align: left; margin-top: 30px; }
         .policy-item { background: rgba(255, 255, 255, 0.3); padding: 20px; border-radius: 12px; border: 1px solid rgba(255, 255, 255, 0.2); }
@@ -84,7 +92,7 @@
         }
     </style>
 </head>
-<body onload="fetchAvailability()">
+<body onload="initPage()">
 
     <nav>
         <div class="logo-container">
@@ -128,9 +136,7 @@
         <div class="booking-item">
             <label><i class="fas fa-user"></i> Guests</label>
             <select id="guests" onchange="calculatePrice()">
-                <option value="2">2 Adults</option>
-                <option value="3">3 Adults (Extra Bed)</option>
-            </select>
+                </select>
         </div>
 
         <div style="padding: 10px 20px; text-align: center;">
@@ -156,6 +162,48 @@
         <div id="imgModal" class="modal">
             <span class="close" onclick="closeModal()">×</span>
             <img class="modal-content" id="modalImg">
+        </div>
+
+        <div class="glass-card" id="tariff">
+            <h2>Room Features & Tariff</h2>
+            
+            <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 30px; margin: 30px 0 50px; padding-bottom: 30px; border-bottom: 1px solid rgba(0,0,0,0.05);">
+                <div class="feature-item">
+                    <i class="fas fa-snowflake"></i>
+                    <span>Air Conditioned</span>
+                </div>
+                <div class="feature-item">
+                    <i class="fas fa-wifi"></i>
+                    <span>High Speed WiFi</span>
+                </div>
+                <div class="feature-item">
+                    <i class="fas fa-restroom"></i>
+                    <span>Private Bathroom</span>
+                </div>
+                <div class="feature-item">
+                    <i class="fas fa-couch"></i>
+                    <span>Roof Top Seating Area</span>
+                </div>
+            </div>
+
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px;">
+                <div class="price-card">
+                    <span class="price-label">Weekday Rate</span>
+                    <div class="price-value">₹2,500</div>
+                    <span class="price-sub">Monday - Thursday</span>
+                </div>
+                <div class="price-card" style="border-color: var(--forest);">
+                    <span class="price-label">Weekend Rate</span>
+                    <div class="price-value">₹3,500</div>
+                    <span class="price-sub">Friday - Sunday</span>
+                </div>
+                <div class="price-card" style="background: rgba(192, 57, 43, 0.05); border-color: rgba(192, 57, 43, 0.2);">
+                    <span class="price-label" style="color: #c0392b;">Extra Adult</span>
+                    <div class="price-value" style="color: #c0392b;">+ ₹1,000</div>
+                    <span class="price-sub">Per night (above 5 yrs)</span>
+                </div>
+            </div>
+            <p style="margin-top: 25px; font-size: 0.85rem; color: #777;">*Rates are per room per night for 2 adults. Maximum 3-4 adults per room with extra beds.</p>
         </div>
 
         <div class="glass-card" id="reviews">
@@ -191,14 +239,6 @@
                 </div>
             </div>
             <button class="book-btn" style="margin-top: 20px; background: var(--forest);" onclick="sendWeddingInquiry()">Inquire for Events</button>
-        </div>
-
-        <div class="glass-card" id="tariff">
-            <h2>Tariff & Packages</h2>
-            <table class="pricing-table">
-                <thead><tr><th>Room Type</th><th>Weekday</th><th>Weekend</th></tr></thead>
-                <tbody><tr><td>Container Room</td><td><b>₹2,500</b></td><td><b>₹3,500</b></td></tr></tbody>
-            </table>
         </div>
 
         <div class="glass-card" id="rules">
@@ -250,6 +290,11 @@
     <script>
         let bookedDates = {};
 
+        function initPage() {
+            fetchAvailability();
+            updateGuestOptions();
+        }
+
         // 1. Initialize Flatpickr for Range Selection
         flatpickr("#date-range", {
             mode: "range",
@@ -272,20 +317,17 @@
             const guestSelect = document.getElementById('guests');
             const baseGuests = roomsQty * 2;
             
-            guestSelect.innerHTML = ""; // Clear existing
+            guestSelect.innerHTML = "";
             
-            // Add options for base guests and extra adults (up to 1 extra per room)
             for (let i = baseGuests; i <= (baseGuests + roomsQty); i++) {
                 let opt = document.createElement('option');
                 opt.value = i;
                 opt.innerHTML = i + " Adults" + (i > baseGuests ? " (Extra Bed)" : "");
                 guestSelect.appendChild(opt);
             }
-            
             calculatePrice();
         }
 
-        // Fetch availability from your Google Script URL
         async function fetchAvailability() {
             try {
                 const response = await fetch('https://script.google.com/macros/s/AKfycbwN-bxtqoXPf44fnb9YlcnQNsQFznz9DEwPIiZGDNaYi8xbngGfbeJBkXmaAUio2T0/exec');
@@ -309,7 +351,6 @@
             const ci = new Date(ciVal);
             const co = new Date(coVal);
             
-            // Extra Adult Calculation: Each guest above (rooms * 2) adds Rs 1000
             const extraAdults = Math.max(0, guestQty - (roomsQty * 2));
             const extraFeePerNight = extraAdults * 1000;
 
