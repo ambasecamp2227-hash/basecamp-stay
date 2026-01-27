@@ -115,22 +115,21 @@
         </div>
         
         <div class="booking-item">
-            <label><i class="fas fa-user"></i> Guests</label>
-            <select id="guests">
-                <option value="2 Adults">2 Adults</option>
-                <option value="3 Adults">3 Adults</option>
-                <option value="4 Adults">4 Adults</option>
-            </select>
-        </div>
-
-        <div class="booking-item">
             <label><i class="fas fa-bed"></i> Rooms Required</label>
-            <select id="rooms_qty" onchange="calculatePrice()">
+            <select id="rooms_qty" onchange="updateGuestOptions()">
                 <option value="1">1 Room</option>
                 <option value="2">2 Rooms</option>
                 <option value="3">3 Rooms</option>
                 <option value="4">4 Rooms</option>
                 <option value="5">5 Rooms</option>
+            </select>
+        </div>
+
+        <div class="booking-item">
+            <label><i class="fas fa-user"></i> Guests</label>
+            <select id="guests" onchange="calculatePrice()">
+                <option value="2">2 Adults</option>
+                <option value="3">3 Adults (Extra Bed)</option>
             </select>
         </div>
 
@@ -260,13 +259,31 @@
             altFormat: "F j, Y",
             onChange: function(selectedDates) {
                 if (selectedDates.length === 2) {
-                    // Map calendar dates back to your original logic inputs
                     document.getElementById('checkin').value = selectedDates[0].toISOString().split('T')[0];
                     document.getElementById('checkout').value = selectedDates[1].toISOString().split('T')[0];
-                    calculatePrice(); // Trigger your existing logic
+                    calculatePrice(); 
                 }
             }
         });
+
+        // 2. Update Guest Dropdown based on Rooms
+        function updateGuestOptions() {
+            const roomsQty = parseInt(document.getElementById('rooms_qty').value);
+            const guestSelect = document.getElementById('guests');
+            const baseGuests = roomsQty * 2;
+            
+            guestSelect.innerHTML = ""; // Clear existing
+            
+            // Add options for base guests and extra adults (up to 1 extra per room)
+            for (let i = baseGuests; i <= (baseGuests + roomsQty); i++) {
+                let opt = document.createElement('option');
+                opt.value = i;
+                opt.innerHTML = i + " Adults" + (i > baseGuests ? " (Extra Bed)" : "");
+                guestSelect.appendChild(opt);
+            }
+            
+            calculatePrice();
+        }
 
         // Fetch availability from your Google Script URL
         async function fetchAvailability() {
@@ -283,6 +300,7 @@
             const ciVal = document.getElementById('checkin').value;
             const coVal = document.getElementById('checkout').value;
             const roomsQty = parseInt(document.getElementById('rooms_qty').value);
+            const guestQty = parseInt(document.getElementById('guests').value);
             const btn = document.getElementById('book-now-btn');
             const display = document.getElementById('price-display');
 
@@ -290,8 +308,12 @@
 
             const ci = new Date(ciVal);
             const co = new Date(coVal);
+            
+            // Extra Adult Calculation: Each guest above (rooms * 2) adds Rs 1000
+            const extraAdults = Math.max(0, guestQty - (roomsQty * 2));
+            const extraFeePerNight = extraAdults * 1000;
 
-            let totalPerRoom = 0;
+            let totalStayPrice = 0;
             let tempDate = new Date(ci);
             let soldOut = false;
 
@@ -305,7 +327,9 @@
                 }
 
                 const day = tempDate.getDay();
-                totalPerRoom += (day === 0 || day === 5 || day === 6) ? 3500 : 2500;
+                let dailyRoomRate = (day === 0 || day === 5 || day === 6) ? 3500 : 2500;
+                
+                totalStayPrice += (dailyRoomRate * roomsQty) + extraFeePerNight;
                 tempDate.setDate(tempDate.getDate() + 1);
             }
 
@@ -314,8 +338,7 @@
                 display.style.color = "red";
                 btn.disabled = true;
             } else {
-                const finalTotal = totalPerRoom * roomsQty;
-                display.innerText = "Total: ₹" + finalTotal.toLocaleString('en-IN');
+                display.innerText = "Total: ₹" + totalStayPrice.toLocaleString('en-IN');
                 display.style.color = "var(--forest)";
                 btn.disabled = false;
             }
@@ -342,7 +365,7 @@
                             `Check-in: ${ci}%0A` +
                             `Check-out: ${co}%0A` +
                             `Rooms: ${rooms}%0A` +
-                            `Guests: ${guests}%0A` +
+                            `Guests: ${guests} Adults%0A` +
                             `${price}`;
 
             window.open(`https://wa.me/919607772227?text=${message}`, '_blank');
