@@ -10,73 +10,137 @@
             --forest: #2e4d23; 
             --white: #ffffff; 
             --holi-pink: #d81b60;
-            --bg-gradient: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            --holi-orange: #ff9800;
+            --holi-green: #4caf50;
+            --holi-purple: #9c27b0;
         }
+
+        /* COLORFUL ANIMATED BACKGROUND */
         body { 
             font-family: 'Segoe UI', sans-serif; 
-            background: var(--bg-gradient); 
             margin: 0; 
             padding: 40px 5%;
             color: #333;
+            background: linear-gradient(-45deg, #fce4ec, #e8f5e9, #fff3e0, #f3e5f5);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            min-height: 100vh;
         }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
         .glass-card {
-            background: rgba(255, 255, 255, 0.85);
-            backdrop-filter: blur(12px);
-            border-radius: 20px;
-            padding: 40px;
-            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+            background: rgba(255, 255, 255, 0.88);
+            backdrop-filter: blur(15px);
+            border-radius: 30px;
+            padding: 50px 40px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.1);
             max-width: 1100px;
             margin: auto;
+            border: 1px solid rgba(255,255,255,0.3);
         }
-        h1 { color: var(--holi-pink); text-align: center; font-size: 2.5rem; margin-bottom: 10px; }
-        .subtitle { text-align: center; color: var(--forest); font-weight: bold; margin-bottom: 40px; text-transform: uppercase; letter-spacing: 1px; }
+
+        h1 { 
+            color: var(--holi-pink); 
+            text-align: center; 
+            font-size: 3rem; 
+            margin-bottom: 5px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
         
-        .section-title { color: var(--holi-pink); border-bottom: 2px solid #eee; padding-bottom: 10px; margin: 40px 0 20px; font-size: 1.8rem; text-align: center; }
+        .subtitle { 
+            text-align: center; 
+            color: var(--forest); 
+            font-weight: bold; 
+            margin-bottom: 40px; 
+            text-transform: uppercase; 
+            letter-spacing: 2px;
+            font-size: 1.1rem;
+        }
+        
+        .section-title { 
+            color: var(--white);
+            background: var(--holi-pink);
+            display: inline-block;
+            padding: 10px 30px;
+            border-radius: 50px;
+            margin: 50px 0 25px; 
+            font-size: 1.5rem; 
+            box-shadow: 0 5px 15px rgba(216, 27, 96, 0.3);
+        }
 
         .grid-container { 
             display: grid; 
             grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); 
-            gap: 25px; 
+            gap: 30px; 
         }
+
         .day-box { 
             background: white; 
-            padding: 25px; 
-            border-radius: 15px; 
-            border-top: 6px solid var(--holi-pink);
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            padding: 30px; 
+            border-radius: 20px; 
+            border-top: 8px solid var(--holi-pink);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+            transition: transform 0.3s ease;
         }
-        .day-box h3 { color: var(--forest); margin-top: 0; border-bottom: 1px solid #eee; padding-bottom: 10px; text-align: center; }
+        .day-box:hover { transform: translateY(-10px); }
+        .day-box h3 { color: var(--forest); margin-top: 0; border-bottom: 2px solid #f8f8f8; padding-bottom: 15px; text-align: center; font-size: 1.4rem; }
         
         .list-unstyled { list-style: none; padding: 0; margin: 0; }
-        .list-unstyled li { margin-bottom: 12px; display: flex; align-items: flex-start; gap: 10px; line-height: 1.4; font-size: 0.95rem; }
-        .list-unstyled i { color: var(--holi-pink); margin-top: 4px; font-size: 0.9rem; }
+        .list-unstyled li { margin-bottom: 15px; display: flex; align-items: flex-start; gap: 12px; line-height: 1.5; font-size: 1rem; }
+        .list-unstyled i { color: var(--holi-pink); margin-top: 5px; font-size: 1rem; }
         
-        .menu-cat { font-weight: bold; color: var(--forest); margin-top: 15px; display: block; border-bottom: 1px dashed #ddd; padding-bottom: 3px; margin-bottom: 8px; }
-        .time-label { font-weight: bold; color: var(--forest); min-width: 75px; display: inline-block; }
+        .menu-cat { 
+            font-weight: 800; 
+            color: var(--forest); 
+            margin-top: 20px; 
+            display: block; 
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            letter-spacing: 1px;
+            border-left: 4px solid var(--holi-pink);
+            padding-left: 10px;
+            margin-bottom: 10px;
+        }
 
-        .btn-container { text-align: center; margin-top: 50px; }
+        .time-label { font-weight: bold; color: var(--holi-pink); min-width: 80px; display: inline-block; }
+
+        .btn-container { text-align: center; margin-top: 60px; }
         .book-btn { 
-            background: var(--holi-pink); 
+            background: linear-gradient(45deg, var(--holi-pink), var(--holi-purple));
             color: white; 
-            padding: 18px 45px; 
+            padding: 20px 50px; 
             border-radius: 50px; 
             font-weight: bold; 
             text-transform: uppercase; 
             text-decoration: none;
             display: inline-block;
-            transition: 0.3s;
-            box-shadow: 0 10px 20px rgba(216, 27, 96, 0.3);
+            transition: 0.4s;
+            box-shadow: 0 10px 30px rgba(216, 27, 96, 0.4);
+            font-size: 1.2rem;
         }
-        .book-btn:hover { transform: translateY(-3px); box-shadow: 0 15px 25px rgba(216, 27, 96, 0.4); }
+        .book-btn:hover { 
+            transform: scale(1.05); 
+            box-shadow: 0 15px 40px rgba(216, 27, 96, 0.5);
+        }
+
+        @media (max-width: 768px) {
+            h1 { font-size: 2rem; }
+            .glass-card { padding: 30px 20px; }
+        }
     </style>
 </head>
 <body>
 
     <div class="glass-card">
-        <h1>HOLI CELEBRATION 2026</h1>
-        <p class="subtitle">Basecamp Stay Lonavala - Festive Itinerary & Menu</p>
+        <h1>FESTIVAL OF COLORS 2026</h1>
+        <p class="subtitle">Basecamp Stay Lonavala • March 2nd - 4th</p>
 
-        <div class="section-title"><i class="fas fa-calendar-alt"></i> Event Schedule</div>
+        <center><div class="section-title"><i class="fas fa-calendar-check"></i> EVENT ITINERARY</div></center>
         <div class="grid-container">
             <div class="day-box">
                 <h3>Day 1 - 2nd March</h3>
@@ -90,19 +154,19 @@
                 </ul>
             </div>
 
-            <div class="day-box" style="border-top-color: #ff9800;">
+            <div class="day-box" style="border-top-color: var(--holi-orange);">
                 <h3>Day 2 - 3rd March</h3>
                 <ul class="list-unstyled">
                     <li><i class="fas fa-bread-slice"></i> <span><span class="time-label">09:30 AM</span> Breakfast</span></li>
-                    <li><i class="fas fa-music"></i> <span><span class="time-label">10:00 AM</span> Ranga Panchami Celebration - Live DJ & Pool Party</span></li>
+                    <li><i class="fas fa-music"></i> <span><span class="time-label">10:00 AM</span> Ranga Panchami - Live DJ & Pool Party</span></li>
                     <li><i class="fas fa-utensils"></i> <span><span class="time-label">01:30 PM</span> Lunch</span></li>
                     <li><i class="fas fa-coffee"></i> <span><span class="time-label">06:00 PM</span> High Tea</span></li>
-                    <li><i class="fas fa-drumstick-bite"></i> <span><span class="time-label">08:00 PM</span> Barbeque with Live Music</span></li>
+                    <li><i class="fas fa-drumstick-bite"></i> <span><span class="time-label">08:00 PM</span> Barbeque & Live Music</span></li>
                     <li><i class="fas fa-moon"></i> <span><span class="time-label">09:30 PM</span> Dinner</span></li>
                 </ul>
             </div>
 
-            <div class="day-box" style="border-top-color: #4caf50;">
+            <div class="day-box" style="border-top-color: var(--holi-green);">
                 <h3>Day 3 - 4th March</h3>
                 <ul class="list-unstyled">
                     <li><i class="fas fa-coffee"></i> <span><span class="time-label">09:30 AM</span> Breakfast</span></li>
@@ -111,56 +175,56 @@
             </div>
         </div>
 
-        <div class="section-title"><i class="fas fa-utensils"></i> Festive Food Menu</div>
+        <center><div class="section-title" style="background: var(--forest);"><i class="fas fa-utensils"></i> FESTIVE FOOD MENU</div></center>
         <div class="grid-container">
             <div class="day-box">
                 <h3>Day 1 Menu</h3>
                 <span class="menu-cat">Lunch</span>
                 <ul class="list-unstyled">
-                    <li>Hara Bhara Kebab, Pavta & Vanga Gravy, Sukha Bhendi, Chicken Malvani Curry, Tomato Curry, Dal, Rice, Jwari Bhakri, Gajar Halwa</li>
+                    [cite_start]<li>Hara Bhara Kebab, Pavta & Vanga Gravy, Sukha Bhendi, Chicken Malvani, Tomato Curry, Dal, Rice, Jwari Bhakri, Gajar Halwa [cite: 5, 6, 7, 8, 9, 10, 11, 12, 13]</li>
                 </ul>
                 <span class="menu-cat">High Tea</span>
                 <ul class="list-unstyled">
-                    <li>Kanda & Batata Bhaji, Khari, Batter & Toast, Tea & Coffee</li>
+                    [cite_start]<li>Kanda & Batata Bhaji, Khari, Batter & Toast, Tea & Coffee [cite: 16, 17, 18]</li>
                 </ul>
                 <span class="menu-cat">Dinner</span>
                 <ul class="list-unstyled">
-                    <li>Kothambir Vadi, Mix Vegetable, Chicken Masala, Dal Tadka, Rice, Chapati/Puri, Puran Poli & Ice Cream</li>
+                    [cite_start]<li>Kothambir Vadi, Mix Vegetable, Chicken Masala, Dal Tadka, Rice, Chapati/Puri, Puran Poli & Ice Cream [cite: 21, 22, 23, 24, 27, 28, 29]</li>
                 </ul>
             </div>
 
-            <div class="day-box" style="border-top-color: #ff9800;">
+            <div class="day-box" style="border-top-color: var(--holi-orange);">
                 <h3>Day 2 Menu</h3>
                 <span class="menu-cat">Breakfast</span>
                 <ul class="list-unstyled">
-                    <li>Misal Pav, Boiled Egg, Bread Butter, Fresh Fruit Juice, Tea & Coffee</li>
+                    [cite_start]<li>Misal Pav, Boiled Egg, Bread Butter, Fresh Fruit Juice, Tea & Coffee [cite: 32, 33, 34, 35, 36]</li>
                 </ul>
                 <span class="menu-cat">Lunch</span>
                 <ul class="list-unstyled">
-                    <li>Chicken Sukha, Mutton Gravy, Kala Vatana Usal, Batata Bhaji, Dal, Rice, Rice Bhakri, Gulab Jamun with Ice Cream</li>
+                    [cite_start]<li>Chicken Sukha, Mutton Gravy, Kala Vatana Usal, Batata Bhaji, Dal, Rice, Rice Bhakri, Gulab Jamun & Ice Cream [cite: 38, 39, 41, 42, 43, 44, 45, 46]</li>
                 </ul>
                 <span class="menu-cat">High Tea</span>
                 <ul class="list-unstyled">
-                    <li>Egg & Veg Sandwiches, Tea & Coffee</li>
+                    [cite_start]<li>Egg Sandwich, Veg Sandwich, Tea & Coffee [cite: 49, 50, 52]</li>
                 </ul>
-                <span class="menu-cat">Dinner (Barbeque & Biryani)</span>
+                <span class="menu-cat">Dinner (BBQ & Biryani)</span>
                 <ul class="list-unstyled">
-                    <li><b>BBQ:</b> Chicken Leg, Lollypop, Paneer, Baby Corn, Capsicum</li>
-                    <li><b>Main:</b> Veg & Chicken Biryani, Shahi Tukda</li>
+                    [cite_start]<li><b>BBQ:</b> Chicken Leg, Lollypop, Paneer, Baby Corn, Baby Potato, Capsicum [cite: 55, 56]</li>
+                    [cite_start]<li><b>Main:</b> Veg & Chicken Biryani, Shahi Tukda [cite: 57, 58, 59]</li>
                 </ul>
             </div>
 
-            <div class="day-box" style="border-top-color: #4caf50;">
+            <div class="day-box" style="border-top-color: var(--holi-green);">
                 <h3>Day 3 Menu</h3>
                 <span class="menu-cat">Breakfast</span>
                 <ul class="list-unstyled">
-                    <li>Idli, Medu Vada with Chutney & Sambhar, Puri Bhaji, Tea & Coffee, Pastry</li>
+                    [cite_start]<li>Idli, Medu Vada (Chutney & Sambhar), Puri Bhaji, Tea & Coffee, Pastry [cite: 62, 63, 64, 65]</li>
                 </ul>
             </div>
         </div>
 
         <div class="btn-container">
-            <a href="https://wa.me/919607772227?text=Hi! I am interested in the Holi 2026 Package" class="book-btn" target="_blank">Book Your Celebration</a>
+            <a href="https://wa.me/919607772227?text=Hi! I am interested in the Holi 2026 Celebration Package" class="book-btn" target="_blank">Book Your Holi Escape</a>
         </div>
     </div>
 
