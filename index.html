@@ -333,7 +333,10 @@
             fetchAvailability();
             updateGuestOptions();
         }
-
+        function sendHoliInquiry() {
+    const message = `Hi Basecamp! I am interested in the Holi 2026 Celebration Package (March 2nd-4th). Please share availability and rates.`;
+    window.open(`https://wa.me/919607772227?text=${encodeURIComponent(message)}`, '_blank');
+}
         // 1. Initialize Flatpickr for Range Selection
         flatpickr("#date-range", {
             mode: "range",
