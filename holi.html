@@ -16,103 +16,151 @@
             font-family: 'Segoe UI', sans-serif; 
             background: var(--bg-gradient); 
             margin: 0; 
-            padding: 40px 10%;
+            padding: 40px 5%;
             color: #333;
         }
         .glass-card {
-            background: rgba(255, 255, 255, 0.8);
-            backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
             border-radius: 20px;
             padding: 40px;
             box-shadow: 0 8px 32px rgba(0,0,0,0.1);
-            max-width: 1000px;
+            max-width: 1100px;
             margin: auto;
         }
         h1 { color: var(--holi-pink); text-align: center; font-size: 2.5rem; margin-bottom: 10px; }
-        .subtitle { text-align: center; color: var(--forest); font-weight: bold; margin-bottom: 40px; }
+        .subtitle { text-align: center; color: var(--forest); font-weight: bold; margin-bottom: 40px; text-transform: uppercase; letter-spacing: 1px; }
         
-        .itinerary-grid { 
+        .section-title { color: var(--holi-pink); border-bottom: 2px solid #eee; padding-bottom: 10px; margin: 40px 0 20px; font-size: 1.8rem; text-align: center; }
+
+        .grid-container { 
             display: grid; 
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); 
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); 
             gap: 25px; 
         }
         .day-box { 
             background: white; 
             padding: 25px; 
             border-radius: 15px; 
-            border-left: 6px solid var(--holi-pink);
+            border-top: 6px solid var(--holi-pink);
             box-shadow: 0 4px 15px rgba(0,0,0,0.05);
         }
-        .day-box h3 { color: var(--forest); margin-top: 0; border-bottom: 1px solid #eee; padding-bottom: 10px; }
+        .day-box h3 { color: var(--forest); margin-top: 0; border-bottom: 1px solid #eee; padding-bottom: 10px; text-align: center; }
         
-        .itinerary-list { list-style: none; padding: 0; }
-        .itinerary-list li { 
-            margin-bottom: 15px; 
-            display: flex; 
-            align-items: flex-start; 
-            gap: 12px; 
-            line-height: 1.4;
-        }
-        .itinerary-list i { color: var(--holi-pink); margin-top: 4px; width: 20px; text-align: center; }
-        .time { font-weight: bold; color: var(--forest); min-width: 75px; display: inline-block; }
+        .list-unstyled { list-style: none; padding: 0; margin: 0; }
+        .list-unstyled li { margin-bottom: 12px; display: flex; align-items: flex-start; gap: 10px; line-height: 1.4; font-size: 0.95rem; }
+        .list-unstyled i { color: var(--holi-pink); margin-top: 4px; font-size: 0.9rem; }
+        
+        .menu-cat { font-weight: bold; color: var(--forest); margin-top: 15px; display: block; border-bottom: 1px dashed #ddd; padding-bottom: 3px; margin-bottom: 8px; }
+        .time-label { font-weight: bold; color: var(--forest); min-width: 75px; display: inline-block; }
 
-        .btn-container { text-align: center; margin-top: 40px; }
+        .btn-container { text-align: center; margin-top: 50px; }
         .book-btn { 
             background: var(--holi-pink); 
             color: white; 
-            border: none; 
-            padding: 15px 40px; 
-            border-radius: 8px; 
+            padding: 18px 45px; 
+            border-radius: 50px; 
             font-weight: bold; 
             text-transform: uppercase; 
-            cursor: pointer; 
             text-decoration: none;
             display: inline-block;
+            transition: 0.3s;
+            box-shadow: 0 10px 20px rgba(216, 27, 96, 0.3);
         }
+        .book-btn:hover { transform: translateY(-3px); box-shadow: 0 15px 25px rgba(216, 27, 96, 0.4); }
     </style>
 </head>
 <body>
 
     <div class="glass-card">
         <h1>HOLI CELEBRATION 2026</h1>
-        <p class="subtitle">Basecamp Stay Lonavala - 3 Day Festive Itinerary</p>
+        <p class="subtitle">Basecamp Stay Lonavala - Festive Itinerary & Menu</p>
 
-        <div class="itinerary-grid">
+        <div class="section-title"><i class="fas fa-calendar-alt"></i> Event Schedule</div>
+        <div class="grid-container">
             <div class="day-box">
-    <h3>Day 1 - 2nd March 2026</h3>
-    <ul class="itinerary-list">
-        <li><i class="fas fa-concierge-bell"></i> <span><span class="time">12:00 PM</span> Check In with Welcome Drink</span></li>
-        <li><i class="fas fa-utensils"></i> <span><span class="time">01:30 PM</span> Lunch</span></li>
-        <li><i class="fas fa-trophy"></i> <span><span class="time">04:30 PM</span> Group Activity (Triangular Cricket Series)</span></li>
-        <li><i class="fas fa-coffee"></i> <span><span class="time">06:00 PM</span> High Tea</span></li>
-        <li><i class="fas fa-fire"></i> <span><span class="time">08:30 PM</span> Holika Dahan (Traditional Wear)</span></li>
-        <li><i class="fas fa-moon"></i> <span><span class="time">09:30 PM</span> Dinner</span></li>
-    </ul>
-</div>
+                <h3>Day 1 - 2nd March</h3>
+                <ul class="list-unstyled">
+                    <li><i class="fas fa-clock"></i> <span><span class="time-label">12:00 PM</span> Check In with Welcome Drink</span></li>
+                    <li><i class="fas fa-utensils"></i> <span><span class="time-label">01:30 PM</span> Lunch</span></li>
+                    <li><i class="fas fa-cricket-bat-ball"></i> <span><span class="time-label">04:30 PM</span> Triangular Cricket Series</span></li>
+                    <li><i class="fas fa-coffee"></i> <span><span class="time-label">06:00 PM</span> High Tea</span></li>
+                    <li><i class="fas fa-fire"></i> <span><span class="time-label">08:30 PM</span> Holika Dahan (Traditional Wear)</span></li>
+                    <li><i class="fas fa-moon"></i> <span><span class="time-label">09:30 PM</span> Dinner</span></li>
+                </ul>
+            </div>
 
-<div class="day-box" style="border-left-color: #ff9800;">
-    <h3>Day 2 - 3rd March 2026</h3>
-    <ul class="itinerary-list">
-        <li><i class="fas fa-bread-slice"></i> <span><span class="time">09:30 AM</span> Breakfast</span></li>
-        <li><i class="fas fa-music"></i> <span><span class="time">10:00 AM</span> Ranga Panchami Celebration - with Live DJ followed by Pool Party</span></li>
-        <li><i class="fas fa-utensils"></i> <span><span class="time">01:30 PM</span> Lunch</span></li>
-        <li><i class="fas fa-coffee"></i> <span><span class="time">06:00 PM</span> High Tea</span></li>
-        <li><i class="fas fa-drumstick-bite"></i> <span><span class="time">08:00 PM</span> Barbeque with Live Music</span></li>
-        <li><i class="fas fa-moon"></i> <span><span class="time">09:30 PM</span> Dinner</span></li>
-    </ul>
-</div>
+            <div class="day-box" style="border-top-color: #ff9800;">
+                <h3>Day 2 - 3rd March</h3>
+                <ul class="list-unstyled">
+                    <li><i class="fas fa-bread-slice"></i> <span><span class="time-label">09:30 AM</span> Breakfast</span></li>
+                    <li><i class="fas fa-music"></i> <span><span class="time-label">10:00 AM</span> Ranga Panchami Celebration - Live DJ & Pool Party</span></li>
+                    <li><i class="fas fa-utensils"></i> <span><span class="time-label">01:30 PM</span> Lunch</span></li>
+                    <li><i class="fas fa-coffee"></i> <span><span class="time-label">06:00 PM</span> High Tea</span></li>
+                    <li><i class="fas fa-drumstick-bite"></i> <span><span class="time-label">08:00 PM</span> Barbeque with Live Music</span></li>
+                    <li><i class="fas fa-moon"></i> <span><span class="time-label">09:30 PM</span> Dinner</span></li>
+                </ul>
+            </div>
 
-<div class="day-box" style="border-left-color: #4caf50;">
-    <h3>Day 3 - 4th March 2026</h3>
-    <ul class="itinerary-list">
-        <li><i class="fas fa-egg"></i> <span><span class="time">09:30 AM</span> Breakfast</span></li>
-        <li><i class="fas fa-door-open"></i> <span><span class="time">10:30 AM</span> Check Out</span></li>
-    </ul>
-</div>
+            <div class="day-box" style="border-top-color: #4caf50;">
+                <h3>Day 3 - 4th March</h3>
+                <ul class="list-unstyled">
+                    <li><i class="fas fa-coffee"></i> <span><span class="time-label">09:30 AM</span> Breakfast</span></li>
+                    <li><i class="fas fa-door-open"></i> <span><span class="time-label">10:30 AM</span> Check Out</span></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="section-title"><i class="fas fa-utensils"></i> Festive Food Menu</div>
+        <div class="grid-container">
+            <div class="day-box">
+                <h3>Day 1 Menu</h3>
+                <span class="menu-cat">Lunch</span>
+                <ul class="list-unstyled">
+                    <li>Hara Bhara Kebab, Pavta & Vanga Gravy, Sukha Bhendi, Chicken Malvani Curry, Tomato Curry, Dal, Rice, Jwari Bhakri, Gajar Halwa</li>
+                </ul>
+                <span class="menu-cat">High Tea</span>
+                <ul class="list-unstyled">
+                    <li>Kanda & Batata Bhaji, Khari, Batter & Toast, Tea & Coffee</li>
+                </ul>
+                <span class="menu-cat">Dinner</span>
+                <ul class="list-unstyled">
+                    <li>Kothambir Vadi, Mix Vegetable, Chicken Masala, Dal Tadka, Rice, Chapati/Puri, Puran Poli & Ice Cream</li>
+                </ul>
+            </div>
+
+            <div class="day-box" style="border-top-color: #ff9800;">
+                <h3>Day 2 Menu</h3>
+                <span class="menu-cat">Breakfast</span>
+                <ul class="list-unstyled">
+                    <li>Misal Pav, Boiled Egg, Bread Butter, Fresh Fruit Juice, Tea & Coffee</li>
+                </ul>
+                <span class="menu-cat">Lunch</span>
+                <ul class="list-unstyled">
+                    <li>Chicken Sukha, Mutton Gravy, Kala Vatana Usal, Batata Bhaji, Dal, Rice, Rice Bhakri, Gulab Jamun with Ice Cream</li>
+                </ul>
+                <span class="menu-cat">High Tea</span>
+                <ul class="list-unstyled">
+                    <li>Egg & Veg Sandwiches, Tea & Coffee</li>
+                </ul>
+                <span class="menu-cat">Dinner (Barbeque & Biryani)</span>
+                <ul class="list-unstyled">
+                    <li><b>BBQ:</b> Chicken Leg, Lollypop, Paneer, Baby Corn, Capsicum</li>
+                    <li><b>Main:</b> Veg & Chicken Biryani, Shahi Tukda</li>
+                </ul>
+            </div>
+
+            <div class="day-box" style="border-top-color: #4caf50;">
+                <h3>Day 3 Menu</h3>
+                <span class="menu-cat">Breakfast</span>
+                <ul class="list-unstyled">
+                    <li>Idli, Medu Vada with Chutney & Sambhar, Puri Bhaji, Tea & Coffee, Pastry</li>
+                </ul>
+            </div>
         </div>
 
         <div class="btn-container">
-            <a href="https://wa.me/919607772227?text=Hi! I am interested in the Holi 2026 Package" class="book-btn" target="_blank">Inquire via WhatsApp</a>
+            <a href="https://wa.me/919607772227?text=Hi! I am interested in the Holi 2026 Package" class="book-btn" target="_blank">Book Your Celebration</a>
         </div>
     </div>
 
