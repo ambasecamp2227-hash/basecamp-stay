@@ -12,35 +12,39 @@
         
         /* Hero Section */
         .hero {
-            height: 70vh;
-            background: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.2)), url('https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=1500&q=80');
+            height: 60vh;
+            background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=1500&q=80');
             background-size: cover; background-position: center;
             display: flex; align-items: center; justify-content: center; color: white; text-align: center;
         }
-        .hero h1 { font-family: 'Playfair Display', serif; font-size: 4rem; margin: 0; }
+        .hero h1 { font-family: 'Playfair Display', serif; font-size: 3.5rem; margin: 0; }
 
         /* Intro Section */
         .intro-section { padding: 80px 20px; max-width: 800px; margin: 0 auto; text-align: center; }
-        .intro-section h2 { font-family: 'Playfair Display', serif; font-size: 2.5rem; color: var(--gold); font-style: italic; }
+        .intro-section h2 { font-family: 'Playfair Display', serif; font-size: 2.5rem; color: var(--gold); font-style: italic; margin-bottom: 10px; }
         .intro-section p { font-size: 1.1rem; color: #666; }
 
-        /* Split Section: Form & Content */
-        .content-wrap { display: flex; flex-wrap: wrap; max-width: 1200px; margin: 0 auto; padding: 40px 20px; gap: 40px; }
-        .features { flex: 1; min-width: 300px; }
-        .inquiry-form { flex: 1; min-width: 300px; background: var(--light); padding: 40px; border-radius: 5px; border: 1px solid #eee; }
+        /* Content Area */
+        .content-wrap { display: flex; flex-wrap: wrap; max-width: 1200px; margin: 0 auto; padding: 0 20px 80px; gap: 60px; }
+        .features { flex: 1.2; min-width: 300px; }
+        .inquiry-form { flex: 0.8; min-width: 320px; background: var(--light); padding: 40px; border-radius: 8px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); border: 1px solid #f1e6d8; }
 
-        /* Feature Styling */
-        .feature-item { margin-bottom: 30px; }
-        .feature-item h3 { font-family: 'Playfair Display', serif; border-bottom: 1px solid var(--gold); display: inline-block; margin-bottom: 10px; }
+        .feature-item { margin-bottom: 40px; }
+        .feature-item h3 { font-family: 'Playfair Display', serif; font-size: 1.6rem; color: var(--dark); margin-bottom: 10px; border-left: 4px solid var(--gold); padding-left: 15px; }
+        .feature-item p { color: #555; padding-left: 19px; }
 
         /* Form Styling */
         .form-group { margin-bottom: 20px; }
-        label { display: block; margin-bottom: 5px; font-weight: 600; font-size: 0.9rem; }
-        input, select, textarea { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 4px; box-sizing: border-box; }
-        .submit-btn { background: var(--gold); color: white; border: none; padding: 15px 30px; width: 100%; font-weight: bold; cursor: pointer; text-transform: uppercase; letter-spacing: 1px; }
-        .submit-btn:hover { background: #8e6d52; }
+        label { display: block; margin-bottom: 8px; font-weight: 600; font-size: 0.85rem; text-transform: uppercase; color: #888; }
+        input, select, textarea { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 4px; font-family: 'Poppins'; }
+        
+        .submit-btn { 
+            background: #25d366; color: white; border: none; padding: 18px; width: 100%; 
+            font-weight: bold; cursor: pointer; text-transform: uppercase; letter-spacing: 1px;
+            display: flex; justify-content: center; align-items: center; gap: 10px; transition: 0.3s;
+        }
+        .submit-btn:hover { background: #1ebe57; transform: translateY(-2px); }
 
-        /* Responsive */
         @media (max-width: 768px) { .hero h1 { font-size: 2.5rem; } .content-wrap { flex-direction: column; } }
     </style>
 </head>
@@ -48,65 +52,81 @@
 
     <header class="hero">
         <div class="hero-content">
-            <p style="text-transform: uppercase; letter-spacing: 3px;">Unforgettable Moments</p>
+            <p style="text-transform: uppercase; letter-spacing: 3px;">Basecamp Stay Events</p>
             <h1>Tied in Tradition</h1>
         </div>
     </header>
 
     <section class="intro-section">
-        <h2>Weddings at Basecamp Stay</h2>
-        <p>Trade the city chaos for the calm of the mountains. At Basecamp Stay, weddings bloom in warmth and elegance, where vows are exchanged under open skies and cool breezes.</p>
+        <h2>A Mountain Destination Wedding</h2>
+        <p>Celebrate your love story at 3,500 ft. Our lush green lawns and panoramic views create a magical setting for your big day.</p>
     </section>
 
     <div class="content-wrap">
-        
         <div class="features">
             <div class="feature-item">
-                <h3>Versatile Venue</h3>
-                <p>Our 40,000 sq. ft. lush green lawn provides a majestic backdrop for ceremonies up to 400 guests.</p>
+                <h3>The Grand Lawn</h3>
+                <p>Spanning 40,000 sq. ft., our manicured lawn can comfortably host up to 400 guests with space for a grand stage and dining area.</p>
             </div>
             <div class="feature-item">
-                <h3>Thoughtful Service</h3>
-                <p>From personalized menus to decor coordination, our team ensures every detail reflects your vision.</p>
+                <h3>Luxury Accommodation</h3>
+                <p>5 premium rooms for the couple and family, ensuring you stay close to the celebration without sacrificing comfort.</p>
             </div>
             <div class="feature-item">
-                <h3>Exclusive Accommodation</h3>
-                <p>5 Luxury rooms available on-site for the wedding party to stay and prepare in comfort.</p>
+                <h3>Signature Views</h3>
+                <p>Every corner of the venue offers a 360-degree view of the mountains—perfect for your wedding photography.</p>
             </div>
         </div>
 
         <div class="inquiry-form">
-            <h3 style="font-family: 'Playfair Display', serif; margin-top: 0;">Plan Your Dream Wedding</h3>
-            <form action="#">
+            <h3 style="font-family: 'Playfair Display', serif; margin-top: 0; color: var(--gold);">Check Availability</h3>
+            <form id="weddingForm">
                 <div class="form-group">
-                    <label>Full Name</label>
-                    <input type="text" placeholder="Enter your name">
+                    <label>Couple's Name</label>
+                    <input type="text" id="name" placeholder="Name" required>
                 </div>
                 <div class="form-group">
-                    <label>Number of Guests</label>
-                    <select>
-                        <option>Upto 50</option>
-                        <option>50 - 100</option>
-                        <option>100 - 250</option>
-                        <option>250 - 400</option>
+                    <label>Approx. Guests</label>
+                    <select id="guests">
+                        <option value="50-100">50 - 100</option>
+                        <option value="100-250">100 - 250</option>
+                        <option value="250-400">250 - 400</option>
                     </select>
                 </div>
                 <div class="form-group">
-                    <label>Event Date</label>
-                    <input type="date">
+                    <label>Preferred Date</label>
+                    <input type="date" id="date" required>
                 </div>
-                <div class="form-group">
-                    <label>Room Requirements?</label>
-                    <select>
-                        <option>Yes, I need rooms</option>
-                        <option>No, event only</option>
-                    </select>
-                </div>
-                <button type="submit" class="submit-btn">Send Inquiry</button>
+                <button type="button" onclick="sendToWhatsapp()" class="submit-btn">
+                    Get a Quote on WhatsApp
+                </button>
             </form>
         </div>
-
     </div>
+
+    <script>
+        function sendToWhatsapp() {
+            let name = document.getElementById('name').value;
+            let guests = document.getElementById('guests').value;
+            let date = document.getElementById('date').value;
+            
+            if(name == "" || date == ""){
+                alert("Please fill in your name and preferred date.");
+                return;
+            }
+
+            // CHANGE THE NUMBER BELOW TO YOUR WHATSAPP NUMBER
+            let phoneNumber = "919607772227"; 
+            
+            let message = "Hi Basecamp Stay! I am interested in booking a wedding. %0A%0A" + 
+                          "*Name:* " + name + "%0A" + 
+                          "*Guest Count:* " + guests + "%0A" + 
+                          "*Date:* " + date + "%0A%0A" + 
+                          "Could you please share more details?";
+
+            window.open("https://wa.me/" + phoneNumber + "?text=" + message, '_blank');
+        }
+    </script>
 
 </body>
 </html>
