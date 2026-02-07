@@ -1,3 +1,41 @@
+<style>
+  /* Basic setup */
+  body { font-family: 'Helvetica', sans-serif; margin: 0; background-color: #fcfaf7; color: #333; }
+  
+  .container { max-width: 1000px; margin: 0 auto; padding: 50px 20px; text-align: center; }
+  
+  h2 { font-size: 2.5rem; color: #2c3e50; }
+  .subtitle { font-size: 1.2rem; color: #7f8c8d; margin-bottom: 40px; }
+
+  /* Making the 2 cards sit side-by-side */
+  .event-grid { display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; }
+
+  /* Designing the cards */
+  .event-card { 
+    background: white; 
+    padding: 30px; 
+    border-radius: 15px; 
+    box-shadow: 0 10px 30px rgba(0,0,0,0.05); 
+    width: 300px; 
+    border: 1px solid #eee;
+  }
+
+  .capacity { display: block; margin-top: 15px; font-weight: bold; color: #d4a373; }
+
+  /* Styling the WhatsApp button */
+  .cta-button { 
+    display: inline-block; 
+    margin-top: 40px; 
+    padding: 18px 35px; 
+    background-color: #25d366; 
+    color: white; 
+    text-decoration: none; 
+    border-radius: 50px; 
+    font-weight: bold;
+    transition: 0.3s;
+  }
+  .cta-button:hover { background-color: #128c7e; transform: scale(1.05); }
+</style>
 <section id="weddings" class="event-section">
   <div class="container">
     <h2>Host Your Grand Event</h2>
