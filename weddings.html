@@ -12,12 +12,27 @@
         
         /* Hero Section */
         .hero {
-            height: 100vh;
-            background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('Hero.jpeg');
-            background-size: cover; background-position: center;
-            display: flex; align-items: center; justify-content: center; color: white; text-align: center;
-        }
-        .hero h1 { font-family: 'Playfair Display', serif; font-size: 3.5rem; margin: 0; }
+    height: 85vh; 
+    background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), 
+                url('YOUR_IMAGE_LINK_HERE.jpg');
+    background-size: cover; 
+    background-position: center;
+    background-attachment: fixed; 
+    
+    display: flex; 
+    align-items: flex-start; /* Changed from 'center' to move text up */
+    justify-content: center; 
+    color: white; 
+    text-align: center;
+    
+    padding-top: 100px; /* Adjust this number to move text higher or lower */
+}
+
+.hero-content h1 { 
+    font-family: 'Playfair Display', serif; 
+    font-size: 4.5rem; 
+    margin: 10px 0; /* Adds a little breathing room between the lines */
+}
 
         /* Intro Section */
         .intro-section { padding: 80px 20px; max-width: 800px; margin: 0 auto; text-align: center; }
