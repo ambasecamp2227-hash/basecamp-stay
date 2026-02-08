@@ -45,10 +45,11 @@
             padding: 15px; border-radius: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.2);
             margin: -50px auto 0; position: relative; z-index: 10; max-width: 90%;
         }
-        .booking-item { padding: 10px 20px; border-right: 1px solid #eee; text-align: left; min-width: 200px; }
+        .booking-item { padding: 10px 20px; border-right: 1px solid #eee; text-align: left; min-width: 180px; }
         .booking-item:last-of-type { border-right: none; }
         .booking-item label { display: block; font-size: 0.75rem; text-transform: uppercase; color: #888; margin-bottom: 5px;}
-        .booking-item input, .booking-item select { border: none; font-weight: bold; font-size: 1rem; width: 100%; outline: none; background: transparent; cursor: pointer; }
+        .booking-item input, .booking-item select { border: none; font-weight: bold; font-size: 1rem; width: 100%; outline: none; background: transparent; cursor: pointer; border-bottom: 1px solid transparent; }
+        .booking-item input:focus { border-bottom: 1px solid var(--forest); }
         .book-btn { background: #c0392b; color: white; border: none; padding: 15px 40px; border-radius: 8px; font-weight: bold; cursor: pointer; text-transform: uppercase; transition: 0.3s; }
         .book-btn:disabled { background: #ccc; cursor: not-allowed; }
         
@@ -121,6 +122,16 @@
 
     <div class="booking-bar">
         <div class="booking-item">
+            <label><i class="fas fa-user"></i> Full Name</label>
+            <input type="text" id="guest_name" placeholder="Enter Name">
+        </div>
+
+        <div class="booking-item">
+            <label><i class="fas fa-phone"></i> Mobile No</label>
+            <input type="tel" id="guest_mobile" placeholder="Enter Mobile">
+        </div>
+
+        <div class="booking-item">
             <label><i class="fas fa-calendar-alt"></i> Dates of Stay</label>
             <input type="text" id="date-range" placeholder="Select Dates">
             <input type="hidden" id="checkin">
@@ -139,9 +150,8 @@
         </div>
 
         <div class="booking-item">
-            <label><i class="fas fa-user"></i> Guests</label>
-            <select id="guests" onchange="calculatePrice()">
-                </select>
+            <label><i class="fas fa-user-group"></i> Guests</label>
+            <select id="guests" onchange="calculatePrice()"></select>
         </div>
 
         <div style="padding: 10px 20px; text-align: center;">
@@ -287,11 +297,11 @@
     <footer style="padding: 50px; text-align: center; background: var(--dark); color: white;">
         <img src="White on Transparent.png" alt="Basecamp Stay White Logo" style="height: 80px; margin-bottom: 20px;">
         <div style="margin-bottom: 20px;">
-    <a href="privacy.html">Privacy Policy</a> | 
-    <a href="terms.html">Terms & Conditions</a> | 
-    <a href="refund.html">Refund Policy</a> | 
-    <a href="contact.html">Contact Us</a>
-</div>
+            <a href="privacy.html">Privacy Policy</a> | 
+            <a href="terms.html">Terms & Conditions</a> | 
+            <a href="refund.html">Refund Policy</a> | 
+            <a href="contact.html">Contact Us</a>
+        </div>
         <p>© 2026 Basecamp Stay Lonavala</p>
     </footer>
 
@@ -402,12 +412,19 @@
         }
 
         function payNow() {
+            const guestName = document.getElementById('guest_name').value;
+            const guestMobile = document.getElementById('guest_mobile').value;
+
+            if (!guestName || !guestMobile) {
+                alert("Please enter your Name and Mobile Number.");
+                return;
+            }
+
             if (currentCalculatedPrice <= 0) {
                 alert("Please select valid dates and rooms first.");
                 return;
             }
 
-            // Capture booking details for the dashboard notes
             const ci = document.getElementById('checkin').value;
             const co = document.getElementById('checkout').value;
             const guests = document.getElementById('guests').value;
@@ -424,18 +441,17 @@
                     alert("Payment Successful! Booking ID: " + response.razorpay_payment_id);
                 },
                 "prefill": {
-                    "name": "",      
-                    "email": "",     
-                    "contact": ""    
+                    "name": guestName,      
+                    "contact": guestMobile    
                 },
                 "modal": {
-                    "ondismiss": function(){
-                        console.log('Checkout form closed');
-                    },
+                    "ondismiss": function(){ console.log('Checkout form closed'); },
                     "escape": false,
                     "backdropclose": false
                 },
                  "notes": {
+                    "Guest_Name": guestName,
+                    "Guest_Mobile": guestMobile,
                     "Check_In": ci,
                     "Check_Out": co,
                     "Total_Rooms": rooms,
@@ -459,14 +475,24 @@
         window.onclick = function(event) {
             if (event.target == document.getElementById("imgModal")) { closeModal(); }
         }
+
         function sendWhatsApp() {
+            const guestName = document.getElementById('guest_name').value;
+            const guestMobile = document.getElementById('guest_mobile').value;
             const ci = document.getElementById('checkin').value;
             const co = document.getElementById('checkout').value;
             const guests = document.getElementById('guests').value;
             const rooms = document.getElementById('rooms_qty').value;
             const price = document.getElementById('price-display').innerText;
 
+            if (!guestName || !guestMobile) {
+                alert("Please enter your Name and Mobile Number.");
+                return;
+            }
+
             const message = `*NEW BOOKING REQUEST*%0A` +
+                            `Guest: ${guestName}%0A` +
+                            `Mobile: ${guestMobile}%0A` +
                             `Check-in: ${ci}%0A` +
                             `Check-out: ${co}%0A` +
                             `Rooms: ${rooms}%0A` +
@@ -475,6 +501,7 @@
 
             window.open(`https://wa.me/919607772227?text=${message}`, '_blank');
         }
+
         function sendWeddingInquiry() {
             const message = `Hi Basecamp Stay! I'm interested in booking your space for an event. Please share details regarding lawn capacity and wedding packages.`;
             window.open(`https://wa.me/919607772227?text=${message}`, '_blank');
