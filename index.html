@@ -8,6 +8,8 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/themes/material_green.css">
     
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+    
     <style>
         :root { 
             --forest: #2e4d23; --earth: #d4a373; --white: #ffffff; --dark: #1a1a1a; 
@@ -49,6 +51,10 @@
         .booking-item input, .booking-item select { border: none; font-weight: bold; font-size: 1rem; width: 100%; outline: none; background: transparent; cursor: pointer; }
         .book-btn { background: #c0392b; color: white; border: none; padding: 15px 40px; border-radius: 8px; font-weight: bold; cursor: pointer; text-transform: uppercase; transition: 0.3s; }
         .book-btn:disabled { background: #ccc; cursor: not-allowed; }
+        
+        /* New Pay Button Styling */
+        .pay-btn { background: #3395FF; color: white; border: none; padding: 15px 40px; border-radius: 8px; font-weight: bold; cursor: pointer; text-transform: uppercase; transition: 0.3s; margin-left: 10px; }
+        .pay-btn:disabled { background: #ccc; cursor: not-allowed; }
 
         .glass-card {
             background: rgba(255, 255, 255, 0.7); backdrop-filter: blur(10px);
@@ -64,12 +70,10 @@
         .close { position: absolute; top: 20px; right: 35px; color: #fff; font-size: 40px; font-weight: bold; cursor: pointer; }
         @keyframes zoom { from {transform:scale(0)} to {transform:scale(1)} }
 
-        /* Feature Icons Styling */
         .feature-item { text-align: center; min-width: 110px; flex: 1; }
         .feature-item i { font-size: 1.8rem; color: var(--forest); display: block; margin-bottom: 10px; }
         .feature-item span { font-size: 0.75rem; font-weight: bold; text-transform: uppercase; color: var(--dark); }
 
-        /* Pricing Card Styling */
         .price-card { background: rgba(255,255,255,0.5); padding: 25px; border-radius: 15px; border: 1px solid var(--white); transition: 0.3s; }
         .price-card:hover { transform: translateY(-5px); background: rgba(255,255,255,0.8); }
         .price-label { color: #888; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px; }
@@ -89,6 +93,7 @@
             .booking-bar { flex-direction: column; margin-top: 20px; width: 95%; }
             .booking-item { border-right: none; border-bottom: 1px solid #eee; width: 80%; }
             h1 { font-size: 2.5rem; }
+            .pay-btn { margin-left: 0; margin-top: 10px; }
         }
     </style>
 </head>
@@ -142,7 +147,8 @@
 
         <div style="padding: 10px 20px; text-align: center;">
             <div id="price-display" style="font-weight: bold; color: var(--forest); margin-bottom: 5px;">Select Dates</div>
-            <button class="book-btn" id="book-now-btn" onclick="sendWhatsApp()">Book Now</button>
+            <button class="book-btn" id="book-now-btn" onclick="sendWhatsApp()">Inquire</button>
+            <button class="pay-btn" id="pay-now-btn" onclick="payNow()">Book Now</button>
         </div>
     </div>
 
@@ -296,13 +302,13 @@
 
     <script>
         let bookedDates = {};
+        let currentCalculatedPrice = 0; // New variable to store the numeric price
 
         function initPage() {
             fetchAvailability();
             updateGuestOptions();
         }
 
-        // 1. Initialize Flatpickr for Range Selection
         flatpickr("#date-range", {
             mode: "range",
             minDate: "today",
@@ -318,7 +324,6 @@
             }
         });
 
-        // 2. Update Guest Dropdown based on Rooms
         function updateGuestOptions() {
             const roomsQty = parseInt(document.getElementById('rooms_qty').value);
             const guestSelect = document.getElementById('guests');
@@ -351,6 +356,7 @@
             const roomsQty = parseInt(document.getElementById('rooms_qty').value);
             const guestQty = parseInt(document.getElementById('guests').value);
             const btn = document.getElementById('book-now-btn');
+            const payBtn = document.getElementById('pay-now-btn'); // Addition
             const display = document.getElementById('price-display');
 
             if (!ciVal || !coVal) return;
@@ -385,11 +391,47 @@
                 display.innerText = "NOT ENOUGH ROOMS AVAILABLE";
                 display.style.color = "red";
                 btn.disabled = true;
+                payBtn.disabled = true; // Addition
+                currentCalculatedPrice = 0;
             } else {
+                currentCalculatedPrice = totalStayPrice; // Store for Razorpay
                 display.innerText = "Total: ₹" + totalStayPrice.toLocaleString('en-IN');
                 display.style.color = "var(--forest)";
                 btn.disabled = false;
+                payBtn.disabled = false; // Addition
             }
+        }
+
+        // New Addition: Razorpay Payment Function
+        function payNow() {
+            if (currentCalculatedPrice <= 0) {
+                alert("Please select valid dates and rooms first.");
+                return;
+            }
+
+            var options = {
+                "key": "rzp_live_SDeTK0mf9MKOhl", // REPLACE THIS WITH YOUR LIVE KEY ID
+                "amount": currentCalculatedPrice * 100, // Amount in paise
+                "currency": "INR",
+                "name": "Basecamp Stay Lonavala",
+                "description": "Room Booking Payment",
+                "image": "Black on Transparent.png",
+                "handler": function (response){
+                    alert("Payment Successful! Booking ID: " + response.razorpay_payment_id);
+                    // Optionally redirect to success page
+                    // window.location.href = "success.html";
+                },
+                "prefill": {
+                    "name": "",
+                    "email": "",
+                    "contact": ""
+                },
+                "theme": {
+                    "color": "#2e4d23"
+                }
+            };
+            var rzp1 = new Razorpay(options);
+            rzp1.open();
         }
 
         function openModal(imgSrc) {
