@@ -52,7 +52,6 @@
         .book-btn { background: #c0392b; color: white; border: none; padding: 15px 40px; border-radius: 8px; font-weight: bold; cursor: pointer; text-transform: uppercase; transition: 0.3s; }
         .book-btn:disabled { background: #ccc; cursor: not-allowed; }
         
-        /* New Pay Button Styling */
         .pay-btn { background: #3395FF; color: white; border: none; padding: 15px 40px; border-radius: 8px; font-weight: bold; cursor: pointer; text-transform: uppercase; transition: 0.3s; margin-left: 10px; }
         .pay-btn:disabled { background: #ccc; cursor: not-allowed; }
 
@@ -302,7 +301,7 @@
 
     <script>
         let bookedDates = {};
-        let currentCalculatedPrice = 0; // New variable to store the numeric price
+        let currentCalculatedPrice = 0; 
 
         function initPage() {
             fetchAvailability();
@@ -356,7 +355,7 @@
             const roomsQty = parseInt(document.getElementById('rooms_qty').value);
             const guestQty = parseInt(document.getElementById('guests').value);
             const btn = document.getElementById('book-now-btn');
-            const payBtn = document.getElementById('pay-now-btn'); // Addition
+            const payBtn = document.getElementById('pay-now-btn'); 
             const display = document.getElementById('price-display');
 
             if (!ciVal || !coVal) return;
@@ -391,40 +390,49 @@
                 display.innerText = "NOT ENOUGH ROOMS AVAILABLE";
                 display.style.color = "red";
                 btn.disabled = true;
-                payBtn.disabled = true; // Addition
+                payBtn.disabled = true; 
                 currentCalculatedPrice = 0;
             } else {
-                currentCalculatedPrice = totalStayPrice; // Store for Razorpay
+                currentCalculatedPrice = totalStayPrice; 
                 display.innerText = "Total: ₹" + totalStayPrice.toLocaleString('en-IN');
                 display.style.color = "var(--forest)";
                 btn.disabled = false;
-                payBtn.disabled = false; // Addition
+                payBtn.disabled = false; 
             }
         }
 
-        // New Addition: Razorpay Payment Function
         function payNow() {
             if (currentCalculatedPrice <= 0) {
                 alert("Please select valid dates and rooms first.");
                 return;
             }
 
+            // Capture booking details for the dashboard notes
+            const ci = document.getElementById('checkin').value;
+            const co = document.getElementById('checkout').value;
+            const guests = document.getElementById('guests').value;
+            const rooms = document.getElementById('rooms_qty').value;
+
             var options = {
-                "key": "rzp_live_SDeTK0mf9MKOhl", // REPLACE THIS WITH YOUR LIVE KEY ID
-                "amount": currentCalculatedPrice * 100, // Amount in paise
+                "key": "rzp_live_SDeTK0mf9MKOhl", 
+                "amount": currentCalculatedPrice * 100, 
                 "currency": "INR",
                 "name": "Basecamp Stay Lonavala",
                 "description": "Room Booking Payment",
                 "image": "Black on Transparent.png",
                 "handler": function (response){
                     alert("Payment Successful! Booking ID: " + response.razorpay_payment_id);
-                    // Optionally redirect to success page
-                    // window.location.href = "success.html";
                 },
                 "prefill": {
-                    "name": "",
-                    "email": "",
-                    "contact": ""
+                    "name": "",      
+                    "email": "",     
+                    "contact": ""    
+                },
+                "notes": {
+                    "Check_In": ci,
+                    "Check_Out": co,
+                    "Total_Rooms": rooms,
+                    "Total_Guests": guests
                 },
                 "theme": {
                     "color": "#2e4d23"
