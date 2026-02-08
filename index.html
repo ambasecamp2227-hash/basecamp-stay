@@ -428,7 +428,14 @@
                     "email": "",     
                     "contact": ""    
                 },
-                "notes": {
+                "modal": {
+                    "ondismiss": function(){
+                        console.log('Checkout form closed');
+                    },
+                    "escape": false,
+                    "backdropclose": false
+                },
+                 "notes": {
                     "Check_In": ci,
                     "Check_Out": co,
                     "Total_Rooms": rooms,
