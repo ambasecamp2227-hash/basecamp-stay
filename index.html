@@ -404,47 +404,35 @@
 
         // New Addition: Razorpay Payment Function
         function payNow() {
-    if (currentCalculatedPrice <= 0) {
-        alert("Please select valid dates and rooms first.");
-        return;
-    }
+            if (currentCalculatedPrice <= 0) {
+                alert("Please select valid dates and rooms first.");
+                return;
+            }
 
-    // Capture the current selection details to send as "Notes"
-    const ci = document.getElementById('checkin').value;
-    const co = document.getElementById('checkout').value;
-    const guests = document.getElementById('guests').value;
-    const rooms = document.getElementById('rooms_qty').value;
-
-    var options = {
-        "key": "YOUR_LIVE_KEY_ID", 
-        "amount": currentCalculatedPrice * 100, 
-        "currency": "INR",
-        "name": "Basecamp Stay Lonavala",
-        "description": "Room Booking",
-        "image": "Black on Transparent.png",
-        "handler": function (response){
-            alert("Payment Successful! ID: " + response.razorpay_payment_id);
-        },
-        // ADDED: This section asks the user for their details
-        "prefill": {
-            "name": "",      // User will type this in the popup
-            "email": "",     // User will type this in the popup
-            "contact": ""    // User will type this in the popup
-        },
-        // ADDED: This attaches the booking dates to the payment in your dashboard
-        "notes": {
-            "Check_In": ci,
-            "Check_Out": co,
-            "Total_Rooms": rooms,
-            "Total_Guests": guests
-        },
-        "theme": {
-            "color": "#2e4d23"
+            var options = {
+                "key": "rzp_live_SDeTK0mf9MKOhl", // REPLACE THIS WITH YOUR LIVE KEY ID
+                "amount": currentCalculatedPrice * 100, // Amount in paise
+                "currency": "INR",
+                "name": "Basecamp Stay Lonavala",
+                "description": "Room Booking Payment",
+                "image": "Black on Transparent.png",
+                "handler": function (response){
+                    alert("Payment Successful! Booking ID: " + response.razorpay_payment_id);
+                    // Optionally redirect to success page
+                    // window.location.href = "success.html";
+                },
+                "prefill": {
+                    "name": "",
+                    "email": "",
+                    "contact": ""
+                },
+                "theme": {
+                    "color": "#2e4d23"
+                }
+            };
+            var rzp1 = new Razorpay(options);
+            rzp1.open();
         }
-    };
-    var rzp1 = new Razorpay(options);
-    rzp1.open();
-}
 
         function openModal(imgSrc) {
             document.getElementById("imgModal").style.display = "block";
