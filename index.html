@@ -389,8 +389,11 @@
             let soldOut = false;
 
             while (tempDate < co) {
-                // Ensure format matches Sheet exactly (YYYY-MM-DD)
-                const dateStr = tempDate.toISOString().split('T')[0];
+                // Extracts Local Date parts to prevent timezone shifting
+                const y = tempDate.getFullYear();
+                const m = String(tempDate.getMonth() + 1).padStart(2, '0');
+                const d = String(tempDate.getDate()).padStart(2, '0');
+                const dateStr = `${y}-${m}-${d}`;
                 
                 const alreadyBooked = parseInt(bookedDates[dateStr] || 0);
                 
@@ -405,6 +408,8 @@
                 let dailyRoomRate = (day === 0 || day === 5 || day === 6) ? 3500 : 2500;
                 
                 totalStayPrice += (dailyRoomRate * roomsQty) + extraFeePerNight;
+                
+                // Move to next day
                 tempDate.setDate(tempDate.getDate() + 1);
             }
             
