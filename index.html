@@ -141,8 +141,8 @@
         .booking-item input:focus { 
             border-bottom: 1px solid var(--forest); 
         }
-        
-        /* Secure Coupon UI */
+
+        /* Coupon UI */
         .coupon-container { 
             display: flex; 
             align-items: center; 
@@ -466,22 +466,10 @@
         <div class="glass-card" id="tariff">
             <h2>Room Features & Tariff</h2>
             <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 30px; margin: 30px 0 50px; padding-bottom: 30px; border-bottom: 1px solid rgba(0,0,0,0.05);">
-                <div class="feature-item">
-                    <i class="fas fa-snowflake"></i>
-                    <span>Air Conditioned</span>
-                </div>
-                <div class="feature-item">
-                    <i class="fas fa-wifi"></i>
-                    <span>High Speed WiFi</span>
-                </div>
-                <div class="feature-item">
-                    <i class="fas fa-restroom"></i>
-                    <span>Private Bathroom</span>
-                </div>
-                <div class="feature-item">
-                    <i class="fas fa-couch"></i>
-                    <span>Roof Top Seating Area</span>
-                </div>
+                <div class="feature-item"><i class="fas fa-snowflake"></i><span>Air Conditioned</span></div>
+                <div class="feature-item"><i class="fas fa-wifi"></i><span>High Speed WiFi</span></div>
+                <div class="feature-item"><i class="fas fa-restroom"></i><span>Private Bathroom</span></div>
+                <div class="feature-item"><i class="fas fa-couch"></i><span>Roof Top Seating Area</span></div>
             </div>
 
             <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px;">
@@ -710,12 +698,23 @@
             const code = document.getElementById('couponInput').value.trim();
             if (!code || currentCalculatedPrice <= 0) return;
 
+            // Updated fetch parameters to handle Google Apps Script redirect correctly
+            const params = new URLSearchParams({
+                action: 'checkCoupon',
+                code: code
+            });
+
             try {
-                const response = await fetch(`${COUPON_URL}?action=checkCoupon&code=${code}`);
+                const response = await fetch(`${COUPON_URL}?${params.toString()}`);
                 const data = await response.json();
+                
                 if (data.valid) {
                     const basePrice = currentCalculatedPrice + discountAmount;
-                    discountAmount = (data.type === "Percentage") ? basePrice * (data.value / 100) : data.value;
+                    if (data.type === "Percentage") {
+                        discountAmount = basePrice * (data.value / 100);
+                    } else {
+                        discountAmount = data.value;
+                    }
                     couponUsed = code.toUpperCase();
                     alert(`Coupon Applied! Saved ₹${discountAmount}`);
                     calculatePrice();
@@ -724,7 +723,10 @@
                     resetCoupon();
                     calculatePrice();
                 }
-            } catch (e) { alert("Coupon service unavailable."); }
+            } catch (e) { 
+                console.error(e);
+                alert("Coupon service unavailable."); 
+            }
         }
 
         function payNow() {
