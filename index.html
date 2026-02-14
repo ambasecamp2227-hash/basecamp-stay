@@ -326,8 +326,14 @@
             altFormat: "F j, Y",
             onChange: function(selectedDates) {
                 if (selectedDates.length === 2) {
-                    document.getElementById('checkin').value = selectedDates[0].toISOString().split('T')[0];
-                    document.getElementById('checkout').value = selectedDates[1].toISOString().split('T')[0];
+                    // Manual string extraction from the local date object to prevent ISO/Timezone drift
+                    const d1 = selectedDates[0];
+                    const d2 = selectedDates[1];
+                    const ciStr = d1.getFullYear() + '-' + String(d1.getMonth() + 1).padStart(2, '0') + '-' + String(d1.getDate()).padStart(2, '0');
+                    const coStr = d2.getFullYear() + '-' + String(d2.getMonth() + 1).padStart(2, '0') + '-' + String(d2.getDate()).padStart(2, '0');
+                    
+                    document.getElementById('checkin').value = ciStr;
+                    document.getElementById('checkout').value = coStr;
                     calculatePrice(); 
                 }
             }
@@ -356,7 +362,8 @@
                 
                 bookedDates = {};
                 for (let key in rawData) {
-                    let cleanKey = key.split('T')[0]; 
+                    // Split at 'T' and trim to ensure exact 'YYYY-MM-DD' match
+                    let cleanKey = key.split('T')[0].trim(); 
                     bookedDates[cleanKey] = rawData[key];
                 }
                 console.log("Availability Loaded Successfully");
@@ -377,19 +384,20 @@
 
             if (!ciVal || !coVal) return;
 
-            // Anchor to Noon to avoid timezone drift
-            const ci = new Date(ciVal + 'T12:00:00');
-            const co = new Date(coVal + 'T12:00:00');
+            // Reconstruct local date without timezone interference by splitting the YYYY-MM-DD string
+            const p1 = ciVal.split('-');
+            const p2 = coVal.split('-');
+            
+            let tempDate = new Date(p1[0], p1[1] - 1, p1[2]);
+            const endDate = new Date(p2[0], p2[1] - 1, p2[2]);
             
             const extraAdults = Math.max(0, guestQty - (roomsQty * 2));
             const extraFeePerNight = extraAdults * 1000;
 
             let totalStayPrice = 0;
-            let tempDate = new Date(ci);
             let soldOut = false;
 
-            while (tempDate < co) {
-                // Extracts Local Date parts to prevent timezone shifting
+            while (tempDate < endDate) {
                 const y = tempDate.getFullYear();
                 const m = String(tempDate.getMonth() + 1).padStart(2, '0');
                 const d = String(tempDate.getDate()).padStart(2, '0');
@@ -409,7 +417,6 @@
                 
                 totalStayPrice += (dailyRoomRate * roomsQty) + extraFeePerNight;
                 
-                // Move to next day
                 tempDate.setDate(tempDate.getDate() + 1);
             }
             
