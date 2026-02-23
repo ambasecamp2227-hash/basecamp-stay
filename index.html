@@ -142,7 +142,6 @@
             border-bottom: 1px solid var(--forest); 
         }
 
-        /* Coupon UI */
         .coupon-container { 
             display: flex; 
             align-items: center; 
@@ -584,7 +583,8 @@
         let discountAmount = 0;
         let couponUsed = "";
 
-        const COUPON_URL = "https://script.google.com/macros/s/AKfycbwyjWaLWF9ja1icPRVlh0wG10Xx3F52mgNdbRiLQ8ipJ-v0gV_D4jfxb1gcxM4Tyey0/exec";
+        // SECURE UPDATED URL
+        const COUPON_URL = "https://script.google.com/macros/s/AKfycbyE8HOMAsvX065_V9o5sQVugqCX0dprIPaP0ihBHfysY1_4ajipvxjDH6kHrjh0SnO6/exec";
 
         function initPage() {
             fetchAvailability();
@@ -694,53 +694,42 @@
         }
 
         async function applyCouponSecurely() {
-    const codeInput = document.getElementById('couponInput');
-    const code = codeInput.value.trim();
-    
-    if (!code) {
-        alert("Please enter a code first.");
-        return;
-    }
-    
-    if (currentCalculatedPrice <= 0) {
-        alert("Please select stay dates first to calculate the total.");
-        return;
-    }
-
-    try {
-        // We use 'fetch' with 'mode: no-cors' or simple URL construction
-        // Adding a timestamp avoids "cache" issues where the browser remembers old results
-        const url = `${COUPON_URL}?action=checkCoupon&code=${encodeURIComponent(code)}&ts=${Date.now()}`;
-        
-        const response = await fetch(url);
-        
-        if (!response.ok) throw new Error('Network response was not ok');
-        
-        const data = await response.json();
-
-        if (data.valid) {
-            // Calculate discount based on the price BEFORE previous discounts
-            const basePrice = currentCalculatedPrice + discountAmount; 
+            const codeInput = document.getElementById('couponInput');
+            const code = codeInput.value.trim();
+            const btn = document.querySelector('.apply-btn');
             
-            if (data.type === "Percentage") {
-                discountAmount = basePrice * (data.value / 100);
-            } else {
-                discountAmount = data.value;
+            if (!code) { alert("Please enter a code first."); return; }
+            if (currentCalculatedPrice <= 0) { alert("Select stay dates first."); return; }
+
+            btn.innerText = "Checking...";
+            btn.disabled = true;
+
+            try {
+                const response = await fetch(`${COUPON_URL}?code=${encodeURIComponent(code)}`);
+                const data = await response.json();
+
+                if (data.valid) {
+                    const basePrice = currentCalculatedPrice + discountAmount; 
+                    if (data.type === "Percentage") {
+                        discountAmount = basePrice * (data.value / 100);
+                    } else {
+                        discountAmount = data.value;
+                    }
+                    couponUsed = code.toUpperCase();
+                    alert(`Success! Discount of ₹${discountAmount.toLocaleString('en-IN')} applied.`);
+                    calculatePrice(); 
+                } else {
+                    alert("This coupon code is invalid or has expired.");
+                    resetCoupon();
+                    calculatePrice();
+                }
+            } catch (error) {
+                alert("Connection error. Please try again.");
+            } finally {
+                btn.innerText = "Apply";
+                btn.disabled = false;
             }
-            
-            couponUsed = code.toUpperCase();
-            alert(`Success! Discount of ₹${discountAmount.toLocaleString('en-IN')} applied.`);
-            calculatePrice(); // Refresh the display
-        } else {
-            alert("This coupon code is invalid or has expired.");
-            resetCoupon();
-            calculatePrice();
         }
-    } catch (error) {
-        console.error("Coupon Error:", error);
-        alert("Could not connect to the coupon service. Please try again or book without a code.");
-    }
-}
 
         function payNow() {
             const guestName = document.getElementById('guest_name').value;
