@@ -734,6 +734,11 @@
         function payNow() {
             const guestName = document.getElementById('guest_name').value;
             const guestMobile = document.getElementById('guest_mobile').value;
+            const checkIn = document.getElementById('checkin').value;
+            const checkOut = document.getElementById('checkout').value;
+            const rooms = document.getElementById('rooms_qty').value;
+            const adults = document.getElementById('guests').value;
+
             if (!guestName || !guestMobile) { alert("Please enter Name and Mobile."); return; }
             if (currentCalculatedPrice <= 0) return;
 
@@ -742,9 +747,20 @@
                 "amount": Math.round(currentCalculatedPrice * 100), 
                 "currency": "INR",
                 "name": "Basecamp Stay Lonavala",
-                "handler": function (resp){ alert("Payment Successful! ID: " + resp.razorpay_payment_id); },
+                "description": "Room Booking - " + checkIn,
+                "handler": function (resp){ 
+                    alert("Payment Successful! ID: " + resp.razorpay_payment_id + "\n\nPlease click 'Inquire' if you haven't sent your details via WhatsApp yet!"); 
+                },
                 "prefill": { "name": guestName, "contact": guestMobile },
-                "notes": { "Check_In": document.getElementById('checkin').value, "Coupon": couponUsed },
+                "notes": { 
+                    "Guest_Name": guestName,
+                    "Mobile": guestMobile,
+                    "Check_In": checkIn, 
+                    "Check_Out": checkOut,
+                    "Rooms": rooms,
+                    "Adults": adults,
+                    "Coupon": couponUsed || 'None'
+                },
                 "theme": { "color": "#2e4d23" }
             };
             new Razorpay(options).open();
